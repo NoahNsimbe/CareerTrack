@@ -89,14 +89,14 @@ export class ServerService{
     this.getArticlesUrl = "api/articles";
     this.careersUrl = null;
     this.combinationsUrl = "api/recom_combinations";
-    // this.uaceSubjectsUrl = "api/uace_subjects";
-    // this.uceSubjectsUrl = "api/uce_subjects";
-    this.uaceSubjectsUrl = "http://127.0.0.1:8000/uace_subjects";
-    this.uceSubjectsUrl = "http://127.0.0.1:8000/uce_subjects";
+    this.uaceSubjectsUrl = "api/uace_subjects";
+    this.uceSubjectsUrl = "api/uce_subjects";
+    // this.uaceSubjectsUrl = "http://127.0.0.1:8000/uace_subjects";
+    // this.uceSubjectsUrl = "http://127.0.0.1:8000/uce_subjects";
     this.programsUrl = "api/recom_programs";
     this.postArticleUrl = "api/post_article";
-    // this.serverApi = "api/"
-    this.serverApi = "http://127.0.0.1:8000/"
+    this.serverApi = "api/"
+   // this.serverApi = "http://127.0.0.1:8000/"
 
    }
 
