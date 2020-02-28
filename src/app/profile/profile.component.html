@@ -1,0 +1,217 @@
+<!-- <div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+            <h3>
+                Loading...
+            </h3>
+            <button>
+                Click me!
+            </button>
+        </div>
+    </ng-template>
+ 
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div> -->
+
+<div style="height: 100%; width: 100%;" class="container-fluid"> 
+    <ngx-loading class="extended-content" [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+</div>
+
+
+
+<div class="container-fluid">
+    <!-- <div class="full-page-width">
+        <div class="center-content-container">
+            <div class="extended-content-container">
+                <ngx-loading class="extended-content" [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+            </div>
+        </div>
+    </div> -->
+    <h3 class="mb-4" style="color: rgb(7,18,102);">Profile</h3>
+    <div class="row mb-3">
+        <div class="col-lg-4 col-md-3 col-sm-12">
+            <div class="card mb-3">
+                <div class="card-body text-center shadow">
+                    <img class="rounded-circle mb-3 mt-4" src="assets/img/isaac.jpg" width="160" height="160">
+                    <div class="mb-3">
+                        <button class="btn btn-primary btn-sm" type="button" style="background-color: transparent;color: rgb(7,18,102);">Change Photo</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body text-center shadow">
+                    <form [formGroup]="profileForm" >
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="username" style="color: rgb(7,18,102);">
+                                    <strong>Current Password</strong></label>
+                                    <input formControlName="password" class="form-control" type="password">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="email" style="color: rgb(7,18,102);">
+                                    <strong>New Password</strong></label>
+                                    <input formControlName="newPassword" class="form-control" type="password" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="email" style="color: rgb(7,18,102);">
+                                    <strong>Confirm Password</strong></label>
+                                    <input formControlName="confirmPassword" class="form-control" type="password" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-sm" type="submit" style="background-color: transparent;color: rgb(7,18,102);">Change Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-sm-12 col-md-9">
+            <!-- <div class="row mb-3 d-none">
+                <div class="col">
+                    <div class="card text-white bg-primary shadow">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p class="m-0">Peformance</p>
+                                    <p class="m-0"><strong>65.2%</strong></p>
+                                </div>
+                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                            </div>
+                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-success shadow">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p class="m-0">Peformance</p>
+                                    <p class="m-0"><strong>65.2%</strong></p>
+                                </div>
+                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                            </div>
+                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow mb-3">
+                        <div class="card-header py-3">
+                            <p class=" m-0 font-weight-bold" style="color: rgb(7,18,102);">User Settings</p>
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="profileForm" >
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="first_name" style="color: rgb(7,18,102);">
+                                                <strong>First Name</strong>
+                                            </label>
+                                            <input formControlName="firstName" class="form-control" type="text" >
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group"><label for="last_name" style="color: rgb(7,18,102);">
+                                            <strong>Last Name</strong></label>
+                                            <input formControlName="lastName" class="form-control" type="text" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group"><label for="username" style="color: rgb(7,18,102);">
+                                            <strong>Username</strong></label>
+                                            <input formControlName="userName" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group"><label for="email" style="color: rgb(7,18,102);">
+                                            <strong>Email Address</strong></label>
+                                            <input formControlName="email" class="form-control" type="email" >
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="form-group">
+                                    <button class="btn btn-primary btn-sm" type="submit" style="background-color: transparent;color: rgb(7,18,102);">Save profile</button>
+                                </div> -->
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card shadow mb-3">
+                        <div class="card-header py-3">
+                            <p class=" m-0 font-weight-bold" style="color: rgb(7,18,102);">Education Background</p>
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="profileForm">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="first_name" style="color: rgb(7,18,102);">
+                                                <strong>Secondary School</strong><br></label>
+                                                <input class="form-control" type="text" >
+                                            </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group"><label for="first_name" style="color: rgb(7,18,102);">
+                                            <strong>College</strong><br></label>
+                                            <input  class="form-control" type="text" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group"><label for="last_name" style="color: rgb(7,18,102);">
+                                            <strong>University</strong><br></label>
+                                            <input class="form-control" type="text" >
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col">
+                                        <div class="form-group"><label for="last_name" style="color: rgb(7,18,102);">
+                                            <strong>Level of Education</strong><br></label>
+                                            <input formControlName="educationLevel" class="form-control" type="text" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group"><label for="username" style="color: rgb(7,18,102);">
+                                            <strong>Profession</strong></label>
+                                            <input formControlName="profession" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <button class="btn btn-primary btn-sm" type="submit" style="background-color: transparent;color: rgb(7,18,102);">Save Changes</button>
+                                </div> -->
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card shadow">
+
+                        <div class="card-body text-center "  >
+                            <form [formGroup]="profileForm">
+                                <div class="form-group text-center">
+                                    <button class="btn btn-primary btn-sm" type="submit" style="background-color: transparent;color: rgb(7,18,102);">Save Changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

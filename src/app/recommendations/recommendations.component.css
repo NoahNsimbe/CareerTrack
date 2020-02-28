@@ -1,0 +1,126 @@
+/* Add application styles & imports to this file! */
+/* input.ng-invalid{
+
+    background-color:red;
+    color:white;
+  } */
+
+ /* select.ng-invalid{
+    background-color:red;
+
+    color:white;
+  } */
+  
+  .fade.show {
+    opacity: 1;
+}
+
+.recomend{
+  color: rgb(7,18,102);
+}
+
+.input-group-text{
+  color: rgb(7,18,102);
+}
+
+
+
+.custom-select{
+  background-color: rgb(7,18,102);
+  color: white;
+}
+
+.custom-select :hover{
+  background-color: white;
+  color: black;
+} 
+
+
+
+.example-form {
+  /* min-width: 150px;
+  max-width: 500px; */
+  width: 70%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
+
+
+/* HeroSearch private styles */
+.search-result li {
+  border-bottom: 1px solid  rgb(7,18,102);
+  border-left: 1px solid  rgb(7,18,102);
+  border-right: 1px solid  rgb(7,18,102);
+  /* width: 50%; */
+  /* height: 16px; */
+  /* padding: 5px; */
+  background-color: white;
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.search-result li:hover {
+  background-color: rgba(0,0,0,0.1);
+  color:  rgb(7,18,102);
+}
+
+.search-result li{
+  color: black;
+}
+
+.search-result li p:hover {
+  color:  rgb(7,18,102);
+}
+
+.search-result li:active {
+  color:  rgb(7,18,102);
+}
+
+
+
+
+
+
+
+
+
+/* .search-result li a {
+  color: black;
+  display: block;
+  text-decoration: none;
+}
+
+.search-result li a:hover {
+  color:  rgb(7,18,102);
+}
+.search-result li a:active {
+  color:  rgb(7,18,102);
+} */
+
+
+
+
+
+
+
+
+/* .search-result li p {
+  color: black;
+}
+
+.search-result li p:hover {
+  color:  rgb(7,18,102);
+}
+.search-result li p:active {
+  color:  rgb(7,18,102);
+} */
+
+
+ul.search-result {
+  margin-top: 0;
+  padding-left: 0;
+}

@@ -1,0 +1,49 @@
+<div class="container-fluid" style="background-color: rgba(0,0,0,0.06); padding-top: 2px; padding-bottom: 2px;" >
+    <div class="m-auto" style="width: 75%;">
+        <div class="login-card" style="max-width: 100%;width: 100%;">
+            <form [formGroup]="postArticleFormGroup" >      
+                <div class="form-row" style="margin-right: 0px;margin-left: 0px;">
+                    <div class="col">
+                        <div class="form-group">
+                            <input class="form-control" formControlName="title" type="text" placeholder="Article heading" style="background-color: transparent;color: rgb(7,18,102);">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-right: 0px;margin-left: 0px;">
+                    <div class="col">
+                        <div class="form-group">
+                            <textarea class="form-control" formControlName="body" placeholder="Article body" style="color: rgb(7,18,102);background-color: transparent;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-right: 0px;margin-left: 0px;">
+                    <div class="col">
+                        <div class="form-group">
+                            <textarea class="form-control" formControlName="comments" placeholder="Your comment" style="background-color: transparent;color: rgb(7,18,102);"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-right: 0px;margin-left: 0px;">
+                    <div class="col col-lg-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <input class="form-control" type="text"  placeholder="Add tags.." style="color: rgb(7,18,102);background-color: transparent;"></div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input class="form-control" type="text" formControlName="articleLink"  placeholder="Share Url" style="color: rgb(7,18,102);background-color: transparent;"></div>
+                    </div>
+                </div>
+
+                <div class="form-row text-center">
+                    <div class="col" style="color: rgb(81,245,4);">
+                        <button mat-raised-button matRipple class="buttonSubmit" (click)="postArticle();">Post</button>
+                        
+                    </div>
+                    <div class="col">
+                        <button mat-raised-button matRipple class="buttonCancel" (click)="goBack()" >Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

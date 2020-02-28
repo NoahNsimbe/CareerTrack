@@ -1,0 +1,36 @@
+<div class="container-fluid border rounded" style="background-color: rgba(0,0,0,0.1);">
+  <ngx-loading style="height: auto;" [show]="loginLoading"></ngx-loading>
+    <div class="row">
+        <div class="col">                              
+            <div class="m-auto" style="color: rgb(7,18,102);">
+                <form [formGroup]="loginForm"  >
+                    <div class="form-row" style=" margin-top: 20px; margin-right: 0px;margin-left: 0px;">
+                        <div class="col">
+                          <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <input matInput type="email" formControlName="email" matInput placeholder="Email address" >
+                              </mat-form-field>
+                          </div>
+                          <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <input matInput type="password" formControlName="password" matInput placeholder="Password" >
+                              </mat-form-field>
+                          </div>
+                           
+                        </div>
+                    </div>
+                    <div class="form-row text-center">
+                        <div class="col">
+                          <button mat-raised-button class="buttonSubmit" [disabled]="!loginForm.valid" [mat-dialog-close]="loginForm">Submit</button>
+                        </div>
+                        <div class="col">
+                          <button mat-raised-button class="buttonCancel" (click)="close();">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+

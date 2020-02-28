@@ -1,0 +1,132 @@
+<div class="row product-list">
+    <div class="col-sm-6 col-md-4 col-sm-12 col-lg-12 col-md-12 product-item">
+        <div class="profile-card">
+            <div class="row" style="height: 100%;margin-left: 1%;">
+                <div class="col">
+                    <p class="text-left profile-bio" style="color: rgb(7,18,102);">Enter UCE Subjects and Results</p>
+                </div>
+            </div>
+            <div class="row" style="height: 100%;margin-left: 1%;">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <form [formGroup]="uceResults" >
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Mathematics &nbsp; &nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceMath (change)="inputChanged(uceMath, $event)" formControlName="uceMath">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">English &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceEng (change)="inputChanged(uceEng, $event)" formControlName="uceEng">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Biology &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceBio (change)="inputChanged(uceBio, $event)" formControlName="uceBio">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>              
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Physics &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #ucePhys (change)="inputChanged(ucePhys, $event)" formControlName="ucePhys">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">History &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceHist (change)="inputChanged(uceHist, $event)" formControlName="uceHist">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <form [formGroup]="uceResults" >
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Geography &nbsp; &nbsp; &nbsp;&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceGeog (change)="inputChanged(uceGeog, $event)" formControlName="uceGeog">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Chemistry &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceChem (change)="inputChanged(uceChem, $event)" formControlName="uceChem">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Elective 1 </span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceElective1 (change)="inputChanged(uceElective1, $event)" formControlName="uceElective1">
+                                    <option value="">Select subject</option>
+                                    <option *ngFor="let subject of electives" [ngValue]="subject">{{subject}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceElective1Grade (change)="inputChanged(uceElective1Grade, $event)" formControlName="uceElective1Grade">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Elective 2</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceElective2 (change)="inputChanged(uceElective2, $event)" formControlName="uceElective2">
+                                    <option value="">Select subject</option>
+                                    <option *ngFor="let subject of electives" [ngValue]="subject">{{subject}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceElective2Grade (change)="inputChanged(uceElective2Grade, $event)" formControlName="uceElective2Grade">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Elective 3</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceElective3 (change)="inputChanged(uceElective3, $event)" formControlName="uceElective3">
+                                    <option value="">Select subject</option>
+                                    <option *ngFor="let subject of electives" [ngValue]="subject">{{subject}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uceElective3Grade (change)="inputChanged(uceElective3Grade, $event)" formControlName="uceElective3Grade">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+

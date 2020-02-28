@@ -1,0 +1,158 @@
+<div class="container bg-white" *ngIf="article">
+    <div>   
+        <div class="row">
+            <div class="card">
+                <div class="card-body" style="color: rgb(7,18,102);background-color: rgba(0,0,0,0.06);">
+                    <h1 class="card-title text-center ">{{article.title}}</h1>
+                    <div class="row" >
+                        <div class="col" >
+                            <div class="jumbotron hero-technology" style="background-image: url(&quot;assets/img/UGA-education.jpg&quot;);">                     
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-sm-12" >
+                            <img class="rounded profile-pic" src="assets/img/isaac.jpg" style="max-height: 80px;width: 50%;max-width: 80px;">
+
+                            <br>
+                          
+                            <h6 class="text-muted card-subtitle mb-2" style="color: rgb(7,18,102);font-size: 16px;font-family: Satisfy, cursive;">{{article.blogger}}</h6>
+                            <h6 class="text-muted card-subtitle mb-2" style="color: rgb(7,18,102);font-size: 16px;font-family: Satisfy, cursive;">Electrical Engineer</h6>
+                            <br>
+
+                        <h6 class="text-muted card-subtitle mb-2" style="color: rgb(7,18,102);font-size: 16px;font-family: Satisfy, cursive;">Published : {{article.datePosted}}</h6>
+
+                            <div>
+                                <i class="fa fa-facebook-square" aria-hidden="true" style="font-size: 1.5em;" ></i>&nbsp;
+                                <i class="fa fa-twitter-square" aria-hidden="true" style="font-size: 1.5em;" ></i>&nbsp;
+                                <i class="fa fa-linkedin-square" aria-hidden="true" style="font-size: 1.5em;" ></i>&nbsp;
+                                <i class="fa fa-envelope-o" aria-hidden="true" style="font-size: 1.5em;" ></i>&nbsp;
+                                <i class="fa fa-link" aria-hidden="true" style="font-size: 1.5em;" ></i>
+                            </div>
+
+                        </div>
+                        <div class="col" >
+                            <div class="container-fluid">
+                            <p class="card-text" style="font-family: Abel, sans-serif;font-size: 20px;">{{article.body}}</p>
+                                <hr>
+                                <form [formGroup]="articleCommentForm" >
+                                    <textarea formControlName="comment" class="border rounded" placeholder=" Type your comment" style="width: 100%;color: rgb(7,18,102);font-family: Abel, sans-serif;"></textarea>                         
+                                </form>
+
+                                <button (click)="postComment(article.articleId)" class="btn btn-outline text-center border rounded" style="margin: 1%;font-size: 15px; padding: 0%;padding-top: 0%;padding-right: 1%; padding-left: 1%;color: rgb(247,248,246);background-color: rgb(13,33,140);margin-left: 0%;">Add comment</button>                               
+                                <a class="card-link" href="#" style="font-size: 13px;color: rgb(29,42,136);">{{article.comments.length}} comments</a>
+                                <a class="card-link" href="#" (click)="likeArticle(article.articleId)">
+                                    <i class="fa fa-thumbs-o-up" style="color: rgb(81,245,4);"></i>
+                                </a>
+                                <a class="card-link" href="#" (click)="dislikeArticle(article.articleId)">
+                                    <i class="fa fa-thumbs-o-down" style="color: rgb(191,29,19);"></i>
+                                </a>
+                                <a class="card-link" href="#">
+                                    <i class="fas fa-share" style="color: rgb(7,18,102);"></i>
+                                </a>
+                            </div>
+                            <br>
+                            <div class="container-fluid">
+                                <div class="card-body bg-white" style="color: rgb(7,18,102);"> 
+                                            <!--background-color: rgba(0,0,0,0.02);-->        
+                                    <div *ngFor="let comment of article.comments" >
+                                    <h6 class="text-muted card-subtitle" style="color: rgb(7,18,102);font-size: 16px;font-family: Satisfy, cursive;">{{comment.person}}&nbsp;&nbsp;,&nbsp;<span>{{comment.date}}</span></h6>
+                                        <p class="card-text" style="font-family: Abel, sans-serif;">{{comment.body}}</p>
+                                    </div>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container bg-white">
+    <div>   
+        <div class="row">
+            <div class="card">
+                <div class="card-body" style="color: rgb(7,18,102);background-color: rgba(0,0,0,0.06);">
+                    <h1 class="card-title text-center ">Fantasizing about retirement.</h1>
+                    <div class="row" >
+                        <div class="col" >
+                            <div class="jumbotron hero-technology" style="background-image: url(&quot;assets/img/UGA-education.jpg&quot;);">                     
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-sm-12" >
+                            <img class="rounded profile-pic" src="assets/img/isaac.jpg" style="max-height: 80px;width: 50%;max-width: 80px;">
+
+                            <br>
+                          
+                            <h6 class="text-muted card-subtitle mb-2" style="color: rgb(7,18,102);font-size: 16px;font-family: Satisfy, cursive;">Isaac Kayemba</h6>
+                            <h6 class="text-muted card-subtitle mb-2" style="color: rgb(7,18,102);font-size: 16px;font-family: Satisfy, cursive;">Electrical Engineer</h6>
+                            <br>
+
+                            <h6 class="text-muted card-subtitle mb-2" style="color: rgb(7,18,102);font-size: 16px;font-family: Satisfy, cursive;">Published Dec 23, 2019</h6>
+
+                            <div>
+                                <i class="fa fa-facebook-square" aria-hidden="true" style="font-size: 1.5em;" ></i>&nbsp;
+                                <i class="fa fa-twitter-square" aria-hidden="true" style="font-size: 1.5em;" ></i>&nbsp;
+                                <i class="fa fa-linkedin-square" aria-hidden="true" style="font-size: 1.5em;" ></i>&nbsp;
+                                <i class="fa fa-envelope-o" aria-hidden="true" style="font-size: 1.5em;" ></i>&nbsp;
+                                <i class="fa fa-link" aria-hidden="true" style="font-size: 1.5em;" ></i>
+                            </div>
+
+                        </div>
+                        <div class="col" >
+                            <div class="container-fluid">
+                                <p class="card-text" style="font-family: Abel, sans-serif;font-size: 20px;">Many of us dream of escaping, but work isn’t going away, so you ought to make it something great instead.&nbsp;Work occupies much of our waking lives. Why not spend the time to you miserable? <br><br>Your career isn’t a solitary activity. Every promotion you get, new job you apply to, or clients/customers you gain will be new people to win over. Here’s how to build the relationships that matter.<br><br>Bosses, clients and colleagues aren’t just going to give you the life you dream of, you need to negotiate what you want.<br><br>Every promotion you get, new job you apply to, or clients/customers you gain will be new people to win over. Here’s how to build the relationships that matter</p>
+                                <hr>
+                                <form [formGroup]="articleCommentForm" >
+                                    <textarea formControlName="comment" class="border rounded" placeholder=" Type your comment" style="width: 100%;color: rgb(7,18,102);font-family: Abel, sans-serif;"></textarea>                         
+                                </form>
+
+                                <button (click)="postComment('1')" class="btn btn-outline text-center border rounded" style="margin: 1%;font-size: 15px; padding: 0%;padding-top: 0%;padding-right: 1%; padding-left: 1%;color: rgb(247,248,246);background-color: rgb(13,33,140);margin-left: 0%;">Add comment</button>                               
+                                <a class="card-link" href="#" style="font-size: 13px;color: rgb(29,42,136);">20 comments</a>
+                                <a class="card-link" href="#">
+                                    <i class="fa fa-thumbs-o-up" style="color: rgb(81,245,4);"></i>
+                                </a>
+                                <a class="card-link" href="#">
+                                    <i class="fa fa-thumbs-o-down" style="color: rgb(191,29,19);"></i>
+                                </a>
+                                <a class="card-link" href="#">
+                                    <i class="fas fa-share" style="color: rgb(7,18,102);"></i>
+                                </a>
+                            </div>
+                            <br>
+                            <div class="container-fluid">
+                                <div class="card-body bg-white" style="color: rgb(7,18,102);">         <!--background-color: rgba(0,0,0,0.02);-->             
+                                    <h6 class="text-muted card-subtitle" style="color: rgb(7,18,102);font-size: 16px;font-family: Satisfy, cursive;">Isaac Kayemba</h6>
+                                    <p class="card-text" style="font-family: Abel, sans-serif;">Many of us dream of escaping, but work isn’t going away, so you ought to make it something great instead.</p>
+
+                                    <br>
+
+                                    <h6 class="text-muted card-subtitle" style="color: rgb(7,18,102);font-size: 16px;font-family: Satisfy, cursive;">Isaac Kayemba</h6>
+                                    <p class="card-text" style="font-family: Abel, sans-serif;">Many of us dream of escaping, but work isn’t going away, so you ought to make it something great instead.</p>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

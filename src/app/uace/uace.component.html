@@ -1,0 +1,124 @@
+
+<div class="row product-list">
+    <div class="col-sm-6 col-md-4 col-sm-12 col-lg-12 col-md-12 product-item">
+        <div class="profile-card">
+            <div class="row" style="height: 100%;margin-left: 1%;">
+                <div class="col">
+                    <form [formGroup]="uaceResults" >
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Recommendation type&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #appType (change)="inputChanged(appType, $event)" formControlName="applicationType">
+                                    <option value="">Select application type</option>
+                                    <option *ngFor="let type of applicationTypes" [ngValue]="type">{{type}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <div class="row" style="height: 100%;margin-left: 1%;">
+                <div class="col">
+                    <p class="text-left profile-bio" style="color: rgb(7,18,102);">Enter UACE Subjects and Results</p>
+                </div>
+            </div>
+            <div class="row" style="height: 100%;margin-left: 1%;">
+                <div class="col">
+                    <form [formGroup]="uaceResults" >
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Option 1&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select  class="custom-select" #uaceOption1 (change)="inputChanged(uaceOption1, $event)" formControlName="uaceOption1">
+                                    <option value="">Select subject</option>
+                                    <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceOption1Grade (change)="inputChanged(uaceOption1Grade, $event)" formControlName="uaceOption1Grade">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Option 2&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceOption2 (change)="inputChanged(uaceOption2, $event)" formControlName="uaceOption2">
+                                    <option value="">Select subject</option>
+                                    <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceOption2Grade (change)="inputChanged(uaceOption2Grade, $event)" formControlName="uaceOption2Grade">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Option 3&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceOption3 (change)="inputChanged(uaceOption3, $event)" formControlName="uaceOption3">
+                                    <option value="">Select subject</option>
+                                    <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceOption3Grade (change)="inputChanged(uaceOption3Grade, $event)" formControlName="uaceOption3Grade">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>              
+                    </form>
+                </div>
+                
+                
+                <div class="col">
+                    <form [formGroup]="uaceResults" >
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Subsidiary&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceSubsidiary (change)="inputChanged(uaceSubsidiary, $event)" formControlName="uaceSubsidiary">
+                                    <option value="">Select subject</option>
+                                    <option *ngFor="let subject of susidiaries" [ngValue]="subject">{{subject}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceSubsidiaryGrade (change)="inputChanged(uaceSubsidiaryGrade, $event)" formControlName="uaceSubsidiaryGrade">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{compulsorySubject}}&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceDpGrade (change)="inputChanged(uaceDpGrade, $event)" formControlName="uaceDpGrade">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div *ngFor="let hero of sub">
+
+
+        <span class="badge">{{hero}}</span> 
+
+
+    </div>
+
+
+
+  

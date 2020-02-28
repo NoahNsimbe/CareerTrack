@@ -1,0 +1,8 @@
+{
+    "programsUrl": "api/recom_programs",
+    "combinationsUrl": "api/recom_combinations",
+    "uceSubjectsUrl": "api/uce_subjects",
+    "careersUrl": "api/careers",
+    "uaceSubjectsUrl": "api/uace_subjects",
+    "articleUrl": "api/articles"
+}
