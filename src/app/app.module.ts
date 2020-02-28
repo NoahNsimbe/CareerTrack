@@ -19,7 +19,7 @@ import { UceComponent } from './uce/uce.component';
 import { UaceComponent } from './uace/uace.component';
 import { RecommendationsComponent } from './recommendations/recommendations.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-// import { InMemoryDataService } from './in-memory-data.service';
+import { InMemoryDataService } from './in-memory-data.service';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
 import { PostArticleComponent } from './post-article/post-article.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -110,7 +110,7 @@ export function provideConfig(){
     HttpClientModule,
     ReactiveFormsModule,
     RxReactiveFormsModule,
-  //  HttpClientInMemoryWebApiModule.forRoot( InMemoryDataService, { dataEncapsulation: false } ),
+    HttpClientInMemoryWebApiModule.forRoot( InMemoryDataService, { dataEncapsulation: false } ),
     BrowserAnimationsModule,
     NgxLoadingModule.forRoot({
    //   animationType: ngxLoadingAnimationTypes.rotatingPlane,
