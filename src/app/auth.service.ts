@@ -5,8 +5,6 @@ import { ServerService } from './server.service';
 import { throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserLogin } from './user';
-import { toFloat } from '@rxweb/reactive-form-validators';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'

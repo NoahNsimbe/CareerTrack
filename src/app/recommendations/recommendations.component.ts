@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Careers, UserSubmissions } from '../careers';
-import { CareersService } from '../careers.service';
+import { Careers, UserSubmissions } from '../main';
 import { UceComponent } from '../uce/uce.component';
 import { UaceComponent } from '../uace/uace.component';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { Subject, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, startWith, map } from 'rxjs/operators';
+import { startWith, map } from 'rxjs/operators';
 import { AuthenticationService } from '../auth.service';
 import { UaceCombinations, Combinations } from '../uce';
 import { Programs, UniveristyPrograms } from '../uace';
+import { MainService } from '../main.service';
 
 
 @Component({
@@ -20,15 +20,6 @@ import { Programs, UniveristyPrograms } from '../uace';
 })
 export class RecommendationsComponent implements OnInit {
   
-  // careerFormGroup: FormGroup = this.formBuilder.group({ 
-    
-  //   comment: [''],
-  //   careers:this.formBuilder.array([
-  //     this.getCareerFormGroup()
-  //   ])
-  // });
-
-  // careersList$: Observable<Career[]>;
   careerForm: FormGroup = this.formBuilder.group({
 
   });
@@ -44,32 +35,28 @@ export class RecommendationsComponent implements OnInit {
   recommendedPrograms: UniveristyPrograms[];
 
   careersList: Careers[];
+  recommendation: any;
   
 
   searchTerms = new Subject<string>();
   loggedIn: boolean;
   saveDetails: boolean;
 
-  Levels: string[];
   level: string;
   loading: boolean;
   operationSuccess: boolean;
 
-  careerChoiceOne: FormControl;
-  careerChoiceTwo: FormControl;
-  careerChoiceThree: FormControl;
+  careerChoice: FormControl;
   comment: FormControl;
   careers: string[];
-  filteredOptionsOne: Observable<string[]>;
-  filteredOptionsTwo: Observable<string[]>;
-  filteredOptionsThree: Observable<string[]>;
+  filteredOption: Observable<string[]>;
   educLevel: { "uce": boolean; "uace": boolean; 'careers': boolean; };
   
 
   constructor(
     private titleService: Title, 
     private authService: AuthenticationService,
-    private careerService: CareersService, 
+    private mainService: MainService, 
     private formBuilder: FormBuilder) {
 
       this.loggedIn = true;
@@ -79,18 +66,19 @@ export class RecommendationsComponent implements OnInit {
       this.submissions = new UserSubmissions();
       
       this.careers = [];
-      this.Levels = ['UCE', 'UACE'];
+
+      this.recommendation = [
+        {  name: 'Combination', value: 'UCE'}, 
+        {  name: 'Course', value: 'UACE'}]
+
       this.educLevel = { "uce": false, "uace": false, 'careers':false  };
       this.operationSuccess = false;
 
-      this.careerChoiceOne = new FormControl("", RxwebValidators.required());
-      this.careerChoiceTwo = new FormControl("");
-      this.careerChoiceThree = new FormControl("");
+      this.careerChoice = new FormControl("", RxwebValidators.required());
       this.comment = new FormControl("");
 
-      this.careerForm.addControl("careerChoiceOne", this.careerChoiceOne);
-      this.careerForm.addControl("careerChoiceTwo", this.careerChoiceTwo);
-      this.careerForm.addControl("careerChoiceThree", this.careerChoiceThree);
+      this.careerForm.addControl("careerChoice", this.careerChoice);
+
       this.careerForm.addControl("comments", this.comment);
 
       
@@ -101,23 +89,12 @@ export class RecommendationsComponent implements OnInit {
     this.loadCareers();
 
 
-    this.filteredOptionsOne = this.careerChoiceOne.valueChanges
+    this.filteredOption = this.careerChoice.valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
       );
 
-      this.filteredOptionsTwo = this.careerChoiceTwo.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
-
-      this.filteredOptionsThree = this.careerChoiceThree.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
   }
 
   private _filter(value: string): string[] {
@@ -132,15 +109,17 @@ export class RecommendationsComponent implements OnInit {
   }
 
   loadCareers(): void{
-    this.careerService
+    this.mainService
         .getCareers()
-        .subscribe((data: Careers) =>{ 
-          this.careers = data.careersList;
+        .subscribe((data: Careers) =>{
+          this.careers = data.careers;
+          console.log(this.careers)
         },error => console.log("error => " + error));
+
   }
 
   getCombinations(results: UserSubmissions): void{
-    this.careerService.getCombinations(results)
+    this.mainService.getCombinations(results)
     .subscribe((data: Combinations) => {
       this.recommendedCombinations = data.combinations;
       this.operationSuccess = true; 
@@ -150,7 +129,7 @@ export class RecommendationsComponent implements OnInit {
   }
 
   getPrograms(results: UserSubmissions): void{
-    this.careerService.getPrograms(results)
+    this.mainService.getPrograms(results)
     .subscribe((data: Programs) => {
       this.recommendedPrograms = data.programs;
       this.operationSuccess = true;
@@ -201,11 +180,11 @@ export class RecommendationsComponent implements OnInit {
     }
 
     if(!this.careerForm.valid){   
-      alert("Please fill in atleast one careeer");
+      alert("Please fill in a careeer");
       return
     }
 
-    this.submissions.careers = this.careerForm.value;
+    this.submissions.career = this.careerForm.value;
 
  //   this.loading = true;
     
@@ -248,77 +227,6 @@ export class RecommendationsComponent implements OnInit {
       this.educLevel.uace = false
       this.educLevel.careers = false
 
-    }
-    
+    } 
   }
-
-
-
-
-
-
-
-
-
-
-
-
-  // searchCareer(): void{
-  //   // this.careerService.getCareers()
-  //   //   .subscribe(careers => this.careersList = careers);
-
-  //   this.careersList$ = this.searchTerms.pipe(
-  //     // wait 300ms after each keystroke before considering the term
-  //     debounceTime(300),
-
-  //     // ignore new term if same as previous term
-  //     distinctUntilChanged(),
-
-  //     // switch to new search observable each time the term changes
-  //     switchMap((term: string) => this.careerService.searchCareers(term)),
-  //   );
-  // }
-
-
-//   addCareer(): void{
-//     let careerArray = <FormArray>this.careerFormGroup.controls.careers;
-//     if(careerArray.length < 3){
-//       careerArray.push(this.getCareerFormGroup());
-      
-      
-//     }
-//     else{
-//       alert("You can enter a maximum of 3 careers");
-//       console.log(this.careerFormGroup);
-//     }
-
-// //    this.search('m');
-//  //   console.log(this.careersList$);
-    
-//   }
-
-//   getCareerFormGroup(){
-//     return this.formBuilder.group({
-//       careerName:['', [RxwebValidators.compose({
-//         validators:[
-//           RxwebValidators.required(),
-//           RxwebValidators.unique()
-//         ]
-//       })] ] //required
-//     })
-//   }
-
-//   selectCareer( value:any) {
-//     var elementValue = value;
-//     this.search("");
-    
-//   }
-
-
-
- // Push a search term into the observable stream.
-  // search(term: string): void {
-  //   this.searchTerms.next(term);
-  // }
-
 }

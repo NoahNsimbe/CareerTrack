@@ -5,5 +5,5 @@ export interface Careers{
 export class UserSubmissions{
     uceResults: any;
     uaceResults: any;
-    careers: any;
-  }
+    career: string;
+}

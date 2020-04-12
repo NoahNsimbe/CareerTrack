@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { ServerService } from '../server.service';
 import { UceSubjects } from '../uce';
+import { MainService } from '../main.service';
 
 
 @Component({
@@ -26,21 +27,23 @@ export class UceComponent implements OnInit {
   // });
 
   // uceResults: any;
-  Grades: any = [
-    {  name: 'D1', value: '1'}, 
-    {  name: 'D2', value: '2'}, 
-    {  name: 'C3', value: '3'}, 
-    {  name: 'C4', value: '4'}, 
-    {  name: 'C5', value: '5'}, 
-    {  name: 'C6', value: '6'}, 
-    {  name: 'P7', value: '7'}, 
-    {  name: 'P8', value: '8'}, 
-    {  name: 'F9', value: '9'}]
+  Grades: any;
 
   electives: string[];
   removedElectives: string[];
 
-  constructor( private formBuilder: FormBuilder, private serverService: ServerService, ) {}
+  constructor( private formBuilder: FormBuilder, private mainService: MainService, ) {
+    this.Grades = [
+      {  name: 'D1', value: '1'}, 
+      {  name: 'D2', value: '2'}, 
+      {  name: 'C3', value: '3'}, 
+      {  name: 'C4', value: '4'}, 
+      {  name: 'C5', value: '5'}, 
+      {  name: 'C6', value: '6'}, 
+      {  name: 'P7', value: '7'}, 
+      {  name: 'P8', value: '8'}, 
+      {  name: 'F9', value: '9'}]
+  }
 
   uceResults = this.formBuilder.group({
     uceMath: ['',  RxwebValidators.required() ],
@@ -145,12 +148,12 @@ export class UceComponent implements OnInit {
   }
 
   loadSubjects(): void{
-    this.serverService
+    this.mainService
         .getUceSubjects()
         .subscribe((data: UceSubjects) => {
-          this.electives = data.subjects;
+          console.log(data)
+          // this.electives = data.subjects;
         });
-
   }
 
   ngOnInit() {

@@ -7,11 +7,11 @@
             <div class="row" >
 
                     <div class="input-group">
-                        <div class="input-group-prepend"><span class="input-group-text">Education Level &nbsp; &nbsp;</span></div>
+                        <div class="input-group-prepend"><span class="input-group-text">Recommendation Type &nbsp; &nbsp;</span></div>
                         <div class="input-group-append">
                             <select class="custom-select" (change)="inputChanged($event)">
-                                <option value="">Select level</option>
-                                <option *ngFor="let kk of Levels" [ngValue]="kk">{{kk}}</option>
+                                <option value="">Select a recommendation</option>
+                                <option *ngFor="let kk of recommendation" [ngValue]="kk.value">{{kk.name}}</option>
                             </select>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                             <div class="profile-card">
                                 <div class="row" style="height: 100%;margin-left: 1%;">
                                     <div class="col">
-                                        <p class="text-left profile-bio" style="color: rgb(7,18,102);">Enter Careers</p>
+                                        <p class="text-left profile-bio" style="color: rgb(7,18,102);">Enter Career</p>
                                     </div>
                                 </div>
                                 <div class="row" style="height: 100%;margin-left: 1%;margin-bottom: 2.5%;">
@@ -60,71 +60,33 @@
                                                 <div class="input-group">
                                                     <mat-form-field class="example-full-width">
                                                         <input type="text"
-                                                               placeholder="Career choice 1 (compulsory)"
+                                                               placeholder="Career choice (compulsory)"
                                                                aria-label="Number"
                                                                matInput
-                                                               [formControl]="careerChoiceOne"
+                                                               [formControl]="careerChoice"
                                                                [matAutocomplete]="auto">
                                                           
                                                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                                                          <mat-option *ngFor="let optionOne of filteredOptionsOne | async" [value]="optionOne">
-                                                            {{optionOne}}
+                                                          <mat-option *ngFor="let option of filteredOption | async" [value]="option">
+                                                            {{option}}
                                                           </mat-option>
                                                         </mat-autocomplete>
                                                       </mat-form-field>
-                                                </div>
-                                                
-            
-                                                <div class="input-group">
-                                                    <mat-form-field class="example-full-width">
-                                                        <input type="text"
-                                                             placeholder="Career choice 2 (optional)"
-                                                             aria-label="Number"
-                                                             matInput
-                                                             [formControl]="careerChoiceTwo"
-                                                             [matAutocomplete]="autoTwo">
-                                                        
-                                                      <mat-autocomplete autoActiveFirstOption #autoTwo="matAutocomplete">
-                                                        <mat-option *ngFor="let optionTwo of filteredOptionsTwo | async" [value]="optionTwo">
-                                                          {{optionTwo}}
-                                                        </mat-option>
-                                                      </mat-autocomplete>
-                                                    </mat-form-field>
-                                                </div>
-                                                
-            
-                                                <div class="input-group">
-                                                <mat-form-field class="example-full-width">
-        
-                                                    <input type="text"
-                                                            placeholder="Career choice 3 (optional)"
-                                                            aria-label="Number"
-                                                            matInput
-                                                            [formControl]="careerChoiceThree"
-                                                            [matAutocomplete]="autoThree">
-                                                    
-                                                    <mat-autocomplete autoActiveFirstOption #autoThree="matAutocomplete">
-                                                    <mat-option *ngFor="let optionThree of filteredOptionsThree | async" [value]="optionThree">
-                                                        {{optionThree}}
-                                                    </mat-option>
-                                                    </mat-autocomplete>
-                                                </mat-form-field>
-                                                </div>
+                                                </div>                 
                                                   
                                             </form>
             
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <div class="col">
                                                 <form [formGroup]="careerForm">
                                                     <textarea class="border rounded border-primary shadow-sm form-control" formControlName="comments" style="width: 100%;height: 75%;margin-top: 1%;" placeholder="  Add comment......"></textarea>
                                                 </form>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         
-                                        <br>
                                         <div class="row">
 
                                                 <div *ngIf="loggedIn" class="col" >
@@ -147,271 +109,9 @@
                     </mat-step>
                 </mat-horizontal-stepper>
             </div>
-            <!-- <app-uace *ngIf="educLevel.uace" ></app-uace>
-            <app-uce *ngIf="educLevel.uce"  ></app-uce>
-            <div class="row product-list" *ngIf="educLevel.careers" >
-                <div data-aos="slide-left" class="col-sm-12 col-lg-12 col-md-12 product-item">
-                    <div class="profile-card">
-                        <div class="row" style="height: 100%;margin-left: 1%;">
-                            <div class="col">
-                                <p class="text-left profile-bio" style="color: rgb(7,18,102);">Enter Careers</p>
-                            </div>
-                        </div>
-                        <div class="row" style="height: 100%;margin-left: 1%;margin-bottom: 2.5%;">
-                            <div class="col" >
-
-                                <div>
-                                    <form [formGroup]="careerFormGroup">
-
-                                        <div class="input-group" [formGroup]="careerGroup" *ngFor="let careerGroup of careerFormGroup.controls.careers.controls;let i = index;">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Career choice {{i+ 1}}</span>
-                                            </div>
-
-                                            <div class="input-group-append">
-                                                <input #careerName id="search-box" (input)="search(careerName.value)" formControlName="careerName" class="form-control" type="text" class="border rounded border-primary shadow-sm">  
-                                            </div>
-                                            
-                                        </div>
-                                        <ul class="search-result" >
-                                            <li *ngFor="let option of careersList$ | async" (click)="selectCareer(option.career)" >
-                                              
-                                                {{option.career}}
-                                            </li>
-                                        </ul>
-                                        
-                                        <button [disabled]="!careerFormGroup.valid" class="btn border rounded" style=" color: rgb(247,248,246);background-color: rgb(13,33,140);" (click)="addCareer()">Add another career</button>
-                                        
-                                    </form>                                      
-                                </div>
-
-                                <div>
-                                    <form [formGroup]="careerFormGroup" class="example-form">
-                                        <div class="input-group">
-                                            <mat-form-field class="example-full-width">
-                                                <input type="text"
-                                                       placeholder="Career choice 1 (compulsory)"
-                                                       
-                                                       matInput
-                                                       [formControl]="myControl"
-                                                       [matAutocomplete]="auto">
-                                                  
-                                                <mat-autocomplete #auto="matAutocomplete">
-                                                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                                    {{option}}
-                                                  </mat-option>
-                                                </mat-autocomplete>
-                                              </mat-form-field>
-                                        </div>
-                                        
-
-                                        <div class="input-group">
-                                            <mat-form-field class="example-full-width">
-                                                <input type="text"
-                                                     placeholder="Career choice 2 (optional)"
-                                                     
-                                                     matInput
-                                                     [formControl]="myControl1"
-                                                     [matAutocomplete]="auto">
-                                                
-                                              <mat-autocomplete #auto="matAutocomplete">
-                                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                                  {{option}}
-                                                </mat-option>
-                                              </mat-autocomplete>
-                                            </mat-form-field>
-                                        </div>
-                                        
-
-                                          <div class="input-group">
-                                            <mat-form-field class="example-full-width">
-
-                                                <input type="text"
-                                                     placeholder="Career choice 3 (optional)"
-                                                    
-                                                     matInput
-                                                     [formControl]="myControl2"
-                                                     [matAutocomplete]="auto">
-                                                
-                                              <mat-autocomplete #auto="matAutocomplete">
-                                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                                  {{option}}
-                                                </mat-option>
-                                              </mat-autocomplete>
-                                            </mat-form-field>
-                                          </div>
-                                          
-                                      </form>
-
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <form [formGroup]="careerFormGroup">
-                                            <textarea class="border rounded border-primary shadow-sm form-control" formControlName="comment" style="width: 100%;height: 75%;margin-top: 1%;" placeholder="  Add comment......"></textarea>
-                                        </form>
-                                    </div>
-                                </div>
-                                
-                                <br>
-                                <div class="row">
-                                    <div class="col">
-                                        <div *ngIf="loggedIn" class="col" >
-                                            <mat-checkbox color="primary" >Save details to my profile</mat-checkbox>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-
-                                        <button class="btn  border rounded" type="button" (click)="verify()" style=" cursor: progress; color: rgb(247,248,246);background-color: rgb(13,33,140);">Submit
-                                        </button>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->  
         </div>
     </div>
 </div>
-
-<!-- <div *ngIf="educLevel.careers" class="container" style="background-color: rgba(0,0,0,0.1);padding-top: 24px;padding-bottom: 24px;">
-    <mat-horizontal-stepper #stepper>
-
-        <mat-step *ngIf="educLevel.uace" >
-            <ng-template matStepLabel><span>UACE Results</span></ng-template>
-            <app-uace ></app-uace>
-            <div class="mat-buttons">
-                <button mat-raised-button matStepperNext>Next</button>
-            </div>
-           
-            
-        </mat-step>
-
-        <mat-step *ngIf="educLevel.uce">
-    
-            <ng-template matStepLabel><span>UCE Results</span></ng-template>
-            <app-uce></app-uce>
-            <div class="mat-buttons">
-                <button mat-raised-button matStepperPrevious>Back</button>
-                <button mat-raised-button matStepperNext>Next</button>
-            </div>
-
-    
-        </mat-step>
-
-        <mat-step >
-          <ng-template matStepLabel><span>Careers</span></ng-template>
-          <div class="row product-list">
-            <div data-aos="slide-left" class="col-sm-12 col-lg-12 col-md-12 product-item">
-                <div class="profile-card">
-                    <div class="row" style="height: 100%;margin-left: 1%;">
-                        <div class="col">
-                            <p class="text-left profile-bio" style="color: rgb(7,18,102);">Enter Careers</p>
-                        </div>
-                    </div>
-                    <div class="row" style="height: 100%;margin-left: 1%;margin-bottom: 2.5%;">
-                        <div class="col" >
-                            <div>
-                                <form [formGroup]="careerFormGroup" class="example-form">
-                                    <div class="input-group">
-                                        <mat-form-field class="example-full-width">
-                                            <input type="text"
-                                                   placeholder="Career choice 1 (compulsory)"
-                                                   
-                                                   matInput
-                                                   [formControl]="myControl"
-                                                   [matAutocomplete]="auto">
-                                              
-                                            <mat-autocomplete #auto="matAutocomplete">
-                                              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                                {{option}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                          </mat-form-field>
-                                    </div>
-                                    
-
-                                    <div class="input-group">
-                                        <mat-form-field class="example-full-width">
-                                            <input type="text"
-                                                 placeholder="Career choice 2 (optional)"
-                                                 
-                                                 matInput
-                                                 [formControl]="myControl1"
-                                                 [matAutocomplete]="auto">
-                                            
-                                          <mat-autocomplete #auto="matAutocomplete">
-                                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                              {{option}}
-                                            </mat-option>
-                                          </mat-autocomplete>
-                                        </mat-form-field>
-                                    </div>
-                                    
-
-                                      <div class="input-group">
-                                        <mat-form-field class="example-full-width">
-
-                                            <input type="text"
-                                                 placeholder="Career choice 3 (optional)"
-                                                
-                                                 matInput
-                                                 [formControl]="myControl2"
-                                                 [matAutocomplete]="auto">
-                                            
-                                          <mat-autocomplete #auto="matAutocomplete">
-                                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                              {{option}}
-                                            </mat-option>
-                                          </mat-autocomplete>
-                                        </mat-form-field>
-                                      </div>
-                                      
-                                  </form>
-
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="row">
-                                <div class="col">
-                                    <form [formGroup]="careerFormGroup">
-                                        <textarea class="border rounded border-primary shadow-sm form-control" formControlName="comment" style="width: 100%;height: 75%;margin-top: 1%;" placeholder="  Add comment......"></textarea>
-                                    </form>
-                                </div>
-                            </div>
-                            
-                            <br>
-                            <div class="row">
-                                <div class="col">
-                                    <div *ngIf="loggedIn" class="col" >
-                                        <mat-checkbox color="primary" >Save details to my profile</mat-checkbox>
-                                    </div>
-                                </div>
-                                <div class="col">
-
-                                    <button class="btn  border rounded" type="button" (click)="verify()" style=" cursor: progress; color: rgb(247,248,246);background-color: rgb(13,33,140);">Submit
-                                    </button>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="mat-buttons">
-                <button  mat-raised-button matStepperPrevious>Back</button>
-                <button  mat-raised-button (click)="stepper.reset()">Reset</button>
-            </div>
-        
-        </div>
-        </mat-step>
-    </mat-horizontal-stepper>
-</div> -->
 
 <div *ngIf="operationSuccess && educLevel.uce && !(educLevel.uace)" class="container" style="background-color: rgba(0,0,0,0.04);padding-top: 20px;">
     <h2 class="post-title recomend text-center" style="width: 100%;" >Recommended Combinations</h2>
@@ -513,125 +213,4 @@
     </div> -->
 </div>
 
-
-<!-- <div *ngIf="!operationSuccess" class="container" style="background-color: rgba(0,0,0,0.04);padding-top: 20px;">
-    <h2 class="post-title recomend text-center" style="width: 100%;" >Recommended Combinations</h2>
-    <div class="row product-list" *ngFor="let combination of recommendedCombinations   | keyvalue" >
-        <div class="col-sm-12 col-lg-12 col-md-12 product-item"  >
-            <div class="border rounded profile-card">
-                <div class="row" style="height: 100%;margin-top: 1%;padding: 1%;">
-                    <div class="col col-lg-2 col-md-2 col-sm-12" style="height: 100%;">
-                        <img class="rounded profile-pic" src="assets/img/computer.jpg" style="height: auto;width: 100%;">
-                    </div>
-                    <div class="col col-lg-10 col-md-10 col-sm-12 text-left" style="max-width: 100%;height: 100%;">
-
-                            <h3  class="post-title recomend"  *ngIf="combination.key == 'code'" >{{combination.value}}</h3>
-                            <h6 class="post-subtitle recomend" *ngIf="combination.key == 'description'"  >{{combination.value}}</h6>
-                            <h4 class="post-subtitle recomend"  >Major careers</h4>
-                            <ul class="recomend" >
-                                <li>Data Scientist</li>
-                                <li>Computer Programmer</li>
-                                <li>Software Engineer</li>
-                            </ul>
-
-                        <p class="text-center post-meta">Last updated&nbsp;September 24, 2019</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row product-list" *ngFor="let recommendation of recommendedCombinations" >
-
-              
-
-              <div  *ngFor="let combination of recommendation  | keyvalue" >
-
-                <p *ngIf="combination.key == 'code'">{{combination.value}} ; </p> <br>
-
-              </div>
-
-    </div>
-
-
-
-</div> -->
-
 <ngx-loading style="height: auto;" [show]="loading"></ngx-loading>
-
-
-
-
-<!-- 
-<div class="container-fluid" id="recommended_courses" style="filter: blur(0px) brightness(56%) contrast(104%) grayscale(0%) hue-rotate(0deg) invert(0%) saturate(99%);">
-    <section style="margin-right: 1%;margin-left: 1%;">
-        <div class="row" style="height: 100%;margin-top: 1%;">
-            <div class="col" style="max-width: 100%;height: 100%;">
-                <div>
-                    <div class="row" style="height: 100%;margin-top: 1%;margin-bottom: 1%;">
-                        <div class="col">
-                            <p class="text-center profile-bio" style="color: rgb(81,245,4);font-size: 20px;">Recommended courses</p>
-                            <div class="row text-center">
-                                <div class="col"><img class="rounded-circle img-fluid border rounded border-success" src="assets/img/law%20career.jpg" style="max-height: 86px;">
-                                    <p style="color: rgb(81,245,4);">Law at Makerere University</p>
-                                </div>
-                                <div class="col"><img class="rounded-circle img-fluid border rounded border-success" src="assets/img/computer.jpg" style="max-height: 86px;height: 86px;">
-                                    <p style="color: rgb(81,245,4);">Computer science at Mbarara University</p>
-                                </div>
-                                <div class="col"><img class="rounded-circle img-fluid border rounded border-success" src="assets/img/surgeon.jpg" style="max-height: 86px;height: 86px;">
-                                    <p style="color: rgb(81,245,4);">Medicine at Gulu University</p>
-                                </div>
-                                <div class="col"><img class="rounded-circle img-fluid border rounded border-success" src="assets/img/lawdc.jpg" style="max-height: 86px;">
-                                    <p style="color: rgb(81,245,4);">Law at&nbsp;Law Development Centre</p>
-                                </div>
-                                <div class="col"><img class="rounded-circle img-fluid border rounded border-success" src="assets/img/engineer.jpg" style="max-height: 86px;height: 86px;">
-                                    <p style="color: rgb(81,245,4);">Civil Engineering at Kabale University</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="height: 100%;margin-top: 1%;margin-bottom: 1%;">
-                        <div class="col">
-                            <p class="text-center profile-bio" style="color: rgb(81,245,4);font-size: 20px;">Possible careers</p>
-                            <div class="row text-center">
-                                <div class="col col-lg-3 col-md-3 col-sm-3"><img class="rounded-circle img-fluid border rounded border-success" src="assets/img/econ.jpg" style="height: 86px;">
-                                    <p style="color: rgb(81,245,4);">Economy analyst</p>
-                                </div>
-                                <div class="col col-lg-3 col-md-3 col-sm-3"><img class="rounded-circle img-fluid border rounded border-success" src="assets/img/law.jpg" style="height: 86px;">
-                                    <p style="color: rgb(81,245,4);">Lawyer</p>
-                                </div>
-                                <div class="col col-lg-3 col-md-3 col-sm-3"><img class="rounded-circle img-fluid border rounded border-success" src="assets/img/med.jpeg" style="height: 86px;">
-                                    <p style="color: rgb(81,245,4);">Doctor</p>
-                                </div>
-                                <div class="col col-lg-3 col-md-3 col-sm-3"><img class="rounded-circle img-fluid border rounded border-success" src="assets/img/eng.jpg" style="height: 86px;">
-                                    <p style="color: rgb(81,245,4);">Engineer</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</div> -->
-
-
-<!-- <div class="container">
-    <div class="col-lg-12">
-        <div>
-            <form  [formGroup]="careerFormGroup">
-                <button class="btn btn-outline-success border rounded" style=" cursor: progress; color: rgb(247,248,246);background-color: rgb(13,33,140);" (click)="addSkill()">Add Skill</button>
-                <div class="input-group" [formGroup]="careerGroup" *ngFor="let careerGroup of careerFormGroup.controls.careers.controls;let i = index;">
-                    <div class="input-group-prepend"><span class="input-group-text">Career choice {{i+ 1}}</span></div>
-                    <div class="input-group-append">
-                        <input formControlName="careerName" class="form-control" type="text" class="border rounded border-primary shadow-sm">
-                    </div>
-                </div>
-                <button [disabled]="!careerFormGroup.valid" class="btn btn-outline-success border rounded" style=" cursor: progress; color: rgb(247,248,246);background-color: rgb(13,33,140);" >Submit</button>
-            </form>
-        </div>
-  
-    </div>
-</div> -->
-

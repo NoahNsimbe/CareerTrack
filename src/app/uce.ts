@@ -2,15 +2,6 @@ export interface UceSubjects {
     subjects: string[];
 }
 
-// export interface UaceCombinations{ 
-//     [index: number]: {    
-//         code: string;
-//         subjects: string[];
-//         description: string;
-//         careers: string[];
-//     };
-
-// }
 
 export interface Combinations{
     combinations: UaceCombinations[];

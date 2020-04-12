@@ -4,6 +4,8 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { ServerService } from '../server.service';
 import { UaceSubjects } from '../uace';
 import { Careers } from '../careers';
+import { MainService } from '../main.service';
+import { UceSubjects } from '../uce';
 
 
 @Component({
@@ -13,22 +15,11 @@ import { Careers } from '../careers';
 })
 export class UaceComponent implements OnInit {
 
-  heroes: Careers[];
-
-  Grades: any = [
-    {  name: 'A', value: '6'}, 
-    {  name: 'B', value: '5'}, 
-    {  name: 'C', value: '4'}, 
-    {  name: 'D', value: '3'}, 
-    {  name: 'E', value: '2'}, 
-    {  name: 'F', value: '1'}, 
-    {  name: 'O', value: '0'}]
-
+  Grades: any;
   compulsorySubject: string;
   subjects: string[];
   susidiaries: string[];
-  applicationTypes: any = ['Government Sponsorship', 'Private Sponsorship'];
-  sub: string[];
+  applicationTypes: any;
 
   uaceResults = this.formBuilder.group({
     uaceOption1: ['', [RxwebValidators.compose({
@@ -59,7 +50,21 @@ export class UaceComponent implements OnInit {
   });
   uaceSubjects: UaceSubjects;
 
-  constructor( private formBuilder: FormBuilder, private serverService: ServerService) { 
+  constructor( private formBuilder: FormBuilder, private mainService: MainService) { 
+
+    this.applicationTypes = [
+      {name:'Public Admission', value: 'Public'}, 
+      {name:'Private Admission', value: 'Private'}
+    ];
+
+    this.Grades = [
+      {  name: 'A', value: '6'}, 
+      {  name: 'B', value: '5'}, 
+      {  name: 'C', value: '4'}, 
+      {  name: 'D', value: '3'}, 
+      {  name: 'E', value: '2'}, 
+      {  name: 'F', value: '1'}, 
+      {  name: 'O', value: '0'}]
     
   }
 
@@ -85,26 +90,10 @@ export class UaceComponent implements OnInit {
 
     this.loadSubjects();
 
-
   }
 
-  getHeroes(): void{
-    this.serverService.getHeroes()
-    .subscribe(heroes => this.heroes = heroes);
-  }
-
-  // loadSubjects():void{
-  //   this.serverService.getUaceSubjects()
-  //       .subscribe(data => {
-  //         console.log(data);
-  //         this.susidiaries = data.subsidiaries;
-  //         this.subjects = data.optionals;
-  //         this.compulsorySubject = data.compulsory;
-  //       } );
-  // }
-
-    loadSubjects(): void{
-    this.serverService.getUaceSubjects()
+  loadSubjects(): void{
+    this.mainService.getUaceSubjects()
         .subscribe((data: UaceSubjects) => {
           //  console.log(data.optionals);
           this.susidiaries = data.subsidiaries;
@@ -112,11 +101,4 @@ export class UaceComponent implements OnInit {
           this.compulsorySubject = data.compulsory;
         });
   }
-
-
-  // loadSubjects(): void{
-  //   this.serverService.getUaceSubjects()
-  //       .subscribe((data: UaceSubjects) => this.uaceSubjects = { ...data });
-  // }
-
 }

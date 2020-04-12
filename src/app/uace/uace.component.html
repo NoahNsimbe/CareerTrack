@@ -6,11 +6,10 @@
                 <div class="col">
                     <form [formGroup]="uaceResults" >
                         <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Recommendation type&nbsp;</span></div>
                             <div class="input-group-append">
                                 <select class="custom-select" #appType (change)="inputChanged(appType, $event)" formControlName="applicationType">
                                     <option value="">Select application type</option>
-                                    <option *ngFor="let type of applicationTypes" [ngValue]="type">{{type}}</option>
+                                    <option *ngFor="let type of applicationTypes" [ngValue]="type.value">{{type.name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -109,15 +108,6 @@
         </div>
     </div>
 </div>
-
-
-    <div *ngFor="let hero of sub">
-
-
-        <span class="badge">{{hero}}</span> 
-
-
-    </div>
 
 
 
