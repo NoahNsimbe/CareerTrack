@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { catchError, retry } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { UserLogin } from './user';
-
+import { Urls } from './main'
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -22,14 +22,15 @@ export class ServerService{
   public readonly updateUserUrl : string;
   public readonly addUserUrl : string;
   public readonly userLogInUrl : string;
-  public readonly serverApi : string;
+  private serverApi : string;
+  //private urls: Urls;
 
 
   private httpOptions: any;
   public serverToken: string;
   public userName: string;
   public tokenValidity: Date;
-  private readonly apiUrlsFile = 'assets/urls.json';
+ // private apiUrlsFile = JSON.parse('assets/urls.json');
 
 
   constructor(private httpClient: HttpClient) {
@@ -39,13 +40,16 @@ export class ServerService{
       })
     };
 
-    this.serverApi = "http://127.0.0.1:8000/"
+    this.serverApi = "http://127.0.0.1:8000/";
 
    }
 
   getApi(request: string): string{
-    return this.serverApi + request + "/";
+    //this.urls = this.apiUrlsFile
 
+    //console.log(this.apiUrlsFile)
+    //console.log(this.urls.serverUrl)
+    return this.serverApi + request + "/";
   }
 
 

@@ -1,19 +1,28 @@
-export interface UaceSubjects {
-    compulsory: string;
-    subsidiaries: string[];
-    optionals: string[];
-}
-
-export interface UniveristyPrograms {
-    name: string;
-    description: string[];
-    careers: string[];
-    lastUpdated: string;
-    source: string;
-    university: string;
-}
-
-
 export interface Programs{
-    programs: UniveristyPrograms[];
+    recommended: Program[];
+    non_recommended: Program[];
+}
+
+export interface Program{
+    code: string;
+    name: string;
+    description: string;
+    university: string;
+    college: string;
+    duration: number;
+    time: string;
+    reason? : string;
+}
+
+export interface UaceSubjects {
+    uace_subjects: uaceSubjects[];
+}
+
+export interface uaceSubjects{
+    code: string;
+    name: string;
+    category: string;
+    language_subject: boolean;
+    general_subject: boolean;
+    abbr: string;
 }

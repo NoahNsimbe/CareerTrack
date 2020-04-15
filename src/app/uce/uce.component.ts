@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { ServerService } from '../server.service';
-import { UceSubjects } from '../uce';
+import { UceSubjects, uceSubjects } from '../uce';
 import { MainService } from '../main.service';
 
 
@@ -13,24 +12,16 @@ import { MainService } from '../main.service';
 })
 export class UceComponent implements OnInit {
 
-  // uceResults = new FormGroup({
-  //   uceMath: new FormControl(''),
-  //   uceEng: new FormControl(''), 
-  //   uceHist: new FormControl(''), 
-  //   uceChem: new FormControl(''), 
-  //   uceBio: new FormControl(''), 
-  //   uceGeog: new FormControl(''), 
-  //   ucePhys: new FormControl(''), 
-  //   uceElective1: new FormControl(''), 
-  //   uceElective2: new FormControl(''), 
-  //   uceElective3: new FormControl(''), 
-  // });
+  uceResultss: FormGroup;
+  uceResults: FormGroup;
 
   // uceResults: any;
   Grades: any;
 
-  electives: string[];
+  electives: uceSubjects[];
   removedElectives: string[];
+  uceSubjects: uceSubjects[];
+  compulsorySubjects: uceSubjects[];
 
   constructor( private formBuilder: FormBuilder, private mainService: MainService, ) {
     this.Grades = [
@@ -43,28 +34,45 @@ export class UceComponent implements OnInit {
       {  name: 'P7', value: '7'}, 
       {  name: 'P8', value: '8'}, 
       {  name: 'F9', value: '9'}]
+
+    this.uceResultss = this.formBuilder.group({
+        uceMath: new FormControl(''),
+        uceEng: new FormControl(''), 
+        uceHist: new FormControl(''), 
+        uceChem: new FormControl(''), 
+        uceBio: new FormControl(''), 
+        uceGeog: new FormControl(''), 
+        ucePhys: new FormControl(''), 
+        uceElective1: new FormControl(''), 
+        uceElective2: new FormControl(''), 
+        uceElective3: new FormControl(''), 
+      });
+
+      this.uceResults = this.formBuilder.group({
+        uceMath: ['',  RxwebValidators.required() ],
+        uceEng: ['',  RxwebValidators.required() ], 
+        uceHist: ['',  RxwebValidators.required() ], 
+        uceChem: ['',  RxwebValidators.required() ], 
+        uceBio: ['', RxwebValidators.required() ], 
+        uceGeog: ['',  RxwebValidators.required() ], 
+        ucePhys: ['',  RxwebValidators.required() ], 
+        uceElective1: ['', RxwebValidators.compose({
+          validators:[
+            RxwebValidators.required(),
+            RxwebValidators.unique()
+          ]
+        })], 
+        uceElective2: ['', RxwebValidators.unique()], 
+        uceElective3: ['', RxwebValidators.unique()],
+        uceElective1Grade: ['',  RxwebValidators.required()], 
+        uceElective2Grade: [''], 
+        uceElective3Grade: [''], 
+      })
   }
 
-  uceResults = this.formBuilder.group({
-    uceMath: ['',  RxwebValidators.required() ],
-    uceEng: ['',  RxwebValidators.required() ], 
-    uceHist: ['',  RxwebValidators.required() ], 
-    uceChem: ['',  RxwebValidators.required() ], 
-    uceBio: ['', RxwebValidators.required() ], 
-    uceGeog: ['',  RxwebValidators.required() ], 
-    ucePhys: ['',  RxwebValidators.required() ], 
-    uceElective1: ['', RxwebValidators.compose({
-      validators:[
-        RxwebValidators.required(),
-        RxwebValidators.unique()
-      ]
-    })], 
-    uceElective2: ['', RxwebValidators.unique()], 
-    uceElective3: ['', RxwebValidators.unique()],
-    uceElective1Grade: ['',  RxwebValidators.required()], 
-    uceElective2Grade: [''], 
-    uceElective3Grade: [''], 
-  })
+
+
+
 
 
   inputChanged(element: HTMLElement, e: { target: { value: any; }; }) {
@@ -151,8 +159,24 @@ export class UceComponent implements OnInit {
     this.mainService
         .getUceSubjects()
         .subscribe((data: UceSubjects) => {
-          console.log(data)
+          this.uceSubjects = data.uce_subjects;
+          console.log(this.uceSubjects)
+
+          this.uceSubjects.forEach(subject => {
+console.log(subject);
+            if(String(subject.category).toString().toUpperCase() == "COMPULSORY"){
+              this.compulsorySubjects.push(subject);
+              this.uceResultss.addControl(subject.code, new FormControl(Validators.required));
+            }
+            else{
+              this.electives.push(subject); 
+              this.uceResultss.addControl(subject.code, new FormControl());
+            }
+            
+          });
           // this.electives = data.subjects;
+          
+
         });
   }
 

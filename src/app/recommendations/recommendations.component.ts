@@ -8,8 +8,8 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { Subject, Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { AuthenticationService } from '../auth.service';
-import { UaceCombinations, Combinations } from '../uce';
-import { Programs, UniveristyPrograms } from '../uace';
+import {  Combinations } from '../uce';
+import { Programs } from '../uace';
 import { MainService } from '../main.service';
 
 
@@ -19,10 +19,8 @@ import { MainService } from '../main.service';
   styleUrls: ['./recommendations.component.css']
 })
 export class RecommendationsComponent implements OnInit {
-  
-  careerForm: FormGroup = this.formBuilder.group({
 
-  });
+
 
   @ViewChild(UceComponent, {static: false}) uceComponent !: UceComponent;
   @ViewChild(UaceComponent, {static: false}) uaceComponent !: UaceComponent;
@@ -30,13 +28,14 @@ export class RecommendationsComponent implements OnInit {
   uaceForm: FormGroup;
   uceForm: FormGroup;
   submissions: UserSubmissions;
+  careerForm: FormGroup;
 
-  recommendedCombinations: UaceCombinations[];
-  recommendedPrograms: UniveristyPrograms[];
+  combinations: Combinations;
+  programs: Programs;
 
   careersList: Careers[];
   recommendation: any;
-  
+
 
   searchTerms = new Subject<string>();
   loggedIn: boolean;
@@ -51,12 +50,11 @@ export class RecommendationsComponent implements OnInit {
   careers: string[];
   filteredOption: Observable<string[]>;
   educLevel: { "uce": boolean; "uace": boolean; 'careers': boolean; };
-  
+
 
   constructor(
-    private titleService: Title, 
-    private authService: AuthenticationService,
-    private mainService: MainService, 
+    private titleService: Title,
+    private mainService: MainService,
     private formBuilder: FormBuilder) {
 
       this.loggedIn = true;
@@ -64,24 +62,22 @@ export class RecommendationsComponent implements OnInit {
       this.saveDetails = false;
 
       this.submissions = new UserSubmissions();
-      
+
       this.careers = [];
 
       this.recommendation = [
-        {  name: 'Combination', value: 'UCE'}, 
+        {  name: 'Combination', value: 'UCE'},
         {  name: 'Course', value: 'UACE'}]
 
       this.educLevel = { "uce": false, "uace": false, 'careers':false  };
       this.operationSuccess = false;
 
       this.careerChoice = new FormControl("", RxwebValidators.required());
-      this.comment = new FormControl("");
 
-      this.careerForm.addControl("careerChoice", this.careerChoice);
+      this.careerForm = this.formBuilder.group({
+        careeer: this.careerChoice,
+      });
 
-      this.careerForm.addControl("comments", this.comment);
-
-      
      }
 
   ngOnInit() {
@@ -104,7 +100,7 @@ export class RecommendationsComponent implements OnInit {
       return this.careers.filter(option => option.toLowerCase().includes(filterValue));
    //   return this.careers.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
     }
-    return 
+    return
 
   }
 
@@ -121,8 +117,8 @@ export class RecommendationsComponent implements OnInit {
   getCombinations(results: UserSubmissions): void{
     this.mainService.getCombinations(results)
     .subscribe((data: Combinations) => {
-      this.recommendedCombinations = data.combinations;
-      this.operationSuccess = true; 
+      this.combinations = data;
+      this.operationSuccess = true;
     },error => {
       console.log("error => " + error);
       this.operationSuccess = false;});
@@ -131,7 +127,7 @@ export class RecommendationsComponent implements OnInit {
   getPrograms(results: UserSubmissions): void{
     this.mainService.getPrograms(results)
     .subscribe((data: Programs) => {
-      this.recommendedPrograms = data.programs;
+      this.programs = data;
       this.operationSuccess = true;
     },error => {
       console.log("error => " + error);
@@ -143,9 +139,11 @@ export class RecommendationsComponent implements OnInit {
   verify(): void{
 
     this.operationSuccess = false;
-    
+
 
     if(this.educLevel.uace){
+
+      console.log(this.uceComponent.uceResultss.value)
 
       this.uceForm = this.uceComponent.uceResults;
       this.uaceForm = this.uaceComponent.uaceResults;
@@ -161,7 +159,7 @@ export class RecommendationsComponent implements OnInit {
 
       this.submissions.uceResults = this.uceForm.value;
       this.submissions.uaceResults = this.uaceForm.value;
-      
+
     }
     else if(this.educLevel.uce){
 
@@ -179,16 +177,18 @@ export class RecommendationsComponent implements OnInit {
       return
     }
 
-    if(!this.careerForm.valid){   
+    if(!this.careerForm.valid){
       alert("Please fill in a careeer");
       return
     }
 
     this.submissions.career = this.careerForm.value;
+    console.log(this.submissions);
+
 
  //   this.loading = true;
-    
-    
+
+
 
     if(this.educLevel.uace){
 
@@ -209,13 +209,15 @@ export class RecommendationsComponent implements OnInit {
     if(elementValue !== ""){
 
       this.level = elementValue
-      if(this.level.trim().valueOf() == "UCE"){
+
+      if(this.level.trim().valueOf() == "Combination"){
         this.educLevel.uce = true
         this.educLevel.uace = false
         this.educLevel.careers = true
+
       }
 
-      if(this.level.trim().valueOf() == "UACE"){
+      if(this.level.trim().valueOf() == "Course"){
         this.educLevel.uce = true
         this.educLevel.uace = true
         this.educLevel.careers = true
@@ -227,6 +229,6 @@ export class RecommendationsComponent implements OnInit {
       this.educLevel.uace = false
       this.educLevel.careers = false
 
-    } 
+    }
   }
 }

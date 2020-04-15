@@ -7,3 +7,12 @@ export class UserSubmissions{
     uaceResults: any;
     career: string;
 }
+
+export interface Urls{
+    programsUrl: string;
+    combinationsUrl: string;
+    uceSubjectsUrl: string;
+    careersUrl: string;
+    uaceSubjectsUrl: string;
+    serverUrl: string;
+}

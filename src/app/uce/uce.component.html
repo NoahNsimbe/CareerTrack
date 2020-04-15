@@ -8,7 +8,29 @@
             </div>
             <div class="row" style="height: 100%;margin-left: 1%;">
                 <div class="col-sm-6 col-md-6 col-lg-6">
+                    <form [formGroup]="uceResultss" >
+<p>error</p>
+                        <div class="input-group" *ngFor="let subject of compulsorySubjects">
+                            <div class="input-group-prepend"><span class="input-group-text">{{ subject.name }} &nbsp; &nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" (change)="inputChanged(subject.code, $event)" [formControlName]="subject.code">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                     <form [formGroup]="uceResults" >
+                        <div class="input-group" *ngFor="let subject of compulsorySubjects">
+                            <div class="input-group-prepend"><span class="input-group-text">{{ subject.name }} &nbsp; &nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" (change)="inputChanged(subject.code, $event)" formControlName="uceMath">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">Mathematics &nbsp; &nbsp;</span></div>
                             <div class="input-group-append">

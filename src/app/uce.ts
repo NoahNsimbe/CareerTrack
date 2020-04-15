@@ -1,18 +1,13 @@
-export interface UceSubjects {
-    subjects: string[];
-}
-
-
 export interface Combinations{
-    combinations: UaceCombinations[];
+    combination: { code : string, subjects: string[] }[];
 }
 
+export interface UceSubjects {
+    uce_subjects: uceSubjects[];
+}
 
-export interface UaceCombinations{    
-        code: string;
-        subjects: string[];
-        description: string;
-        careers: string[];
-        lastUpdated: string;
-        source: string;
+export interface uceSubjects{
+    code: string;
+    name: string;
+    category: string;
 }

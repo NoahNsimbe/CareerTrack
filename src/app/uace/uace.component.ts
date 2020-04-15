@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { ServerService } from '../server.service';
 import { UaceSubjects } from '../uace';
-import { Careers } from '../careers';
 import { MainService } from '../main.service';
-import { UceSubjects } from '../uce';
+
 
 
 @Component({
@@ -20,6 +18,7 @@ export class UaceComponent implements OnInit {
   subjects: string[];
   susidiaries: string[];
   applicationTypes: any;
+  uaceSubjects: UaceSubjects;
 
   uaceResults = this.formBuilder.group({
     uaceOption1: ['', [RxwebValidators.compose({
@@ -48,7 +47,6 @@ export class UaceComponent implements OnInit {
     uaceOption2Grade: ['', RxwebValidators.required() ], 
     uaceOption3Grade: ['', RxwebValidators.required() ], 
   });
-  uaceSubjects: UaceSubjects;
 
   constructor( private formBuilder: FormBuilder, private mainService: MainService) { 
 
@@ -96,9 +94,11 @@ export class UaceComponent implements OnInit {
     this.mainService.getUaceSubjects()
         .subscribe((data: UaceSubjects) => {
           //  console.log(data.optionals);
-          this.susidiaries = data.subsidiaries;
-          this.subjects = data.optionals;
-          this.compulsorySubject = data.compulsory;
+          this.uaceSubjects = data;
+          console.log(this.uaceSubjects);
+          // this.susidiaries = data.subsidiaries;
+          // this.subjects = data.optionals;
+          // this.compulsorySubject = data.compulsory;
         });
   }
 }

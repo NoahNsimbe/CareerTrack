@@ -116,7 +116,7 @@
 <div *ngIf="operationSuccess && educLevel.uce && !(educLevel.uace)" class="container" style="background-color: rgba(0,0,0,0.04);padding-top: 20px;">
     <h2 class="post-title recomend text-center" style="width: 100%;" >Recommended Combinations</h2>
 
-    <div class="row product-list" *ngFor="let combination of recommendedCombinations" >
+    <div class="row product-list" *ngFor="let combination of combinations.combination" >
         <div class="col-sm-12 col-lg-12 col-md-12 product-item">
             <div class="border rounded profile-card">
                 <div class="row" style="height: 100%;margin-top: 1%;padding: 1%;">
@@ -127,46 +127,23 @@
                             <h3  class="post-title recomend"  >
                                 {{combination.code}}&nbsp;&nbsp;
                                 (<span *ngFor="let subject of combination.subjects">{{subject}},&nbsp;</span><span>General Paper</span>)</h3>
-                            <h6 class="post-subtitle recomend"  >{{combination.description}} </h6>
+                            <!-- <h6 class="post-subtitle recomend"  >{{combination.description}} </h6>
                             <h4 class="post-subtitle recomend"  >Major careers</h4>
                             <ul class="recomend" >
                             <li *ngFor="let possibleCareer of combination.careers" >{{possibleCareer}}</li>
-                            </ul>
-                        <p class="text-center post-meta">Last updated&nbsp;:&nbsp;{{combination.lastUpdated}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;Source&nbsp;:&nbsp;{{combination.source}}</p>
+                            </ul> -->
+                        <!-- <p class="text-center post-meta">Last updated&nbsp;:&nbsp;{{combination.lastUpdated}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;Source&nbsp;:&nbsp;{{combination.source}}</p> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<!-- 
-    <div class="row product-list">
-        <div class="col-sm-12 col-lg-12 col-md-12 product-item">
-            <div class="border rounded profile-card">
-                <div class="row" style="height: 100%;margin-top: 1%;padding: 1%;">
-                    <div class="col col-lg-2 col-md-2 col-sm-12" style="height: 100%;">
-                        <img class="rounded profile-pic" src="assets/img/computer.jpg" style="height: auto;width: 100%;">
-                    </div>
-                    <div class="col col-lg-10 col-md-10 col-sm-12 text-left" style="max-width: 100%;height: 100%;">
-                            <h3  class="post-title recomend"  >Bachelor of Science in Computer Science, Makerere University</h3>
-                            <h6 class="post-subtitle recomend"  >Course description</h6>
-                            <h4 class="post-subtitle recomend"  >Major careers</h4>
-                            <ul class="recomend" >
-                                <li>Data Scientist</li>
-                                <li>Computer Programmer</li>
-                                <li>Software Engineer</li>
-                            </ul>
-                        <p class="text-center post-meta">Last updated&nbsp;September 24, 2019</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>
 
 <div *ngIf="operationSuccess && educLevel.uace" class="container" style="background-color: rgba(0,0,0,0.04);padding-top: 20px;">
     <h2 class="post-title recomend text-center" style="width: 100%;" >Recommended University Programs</h2>
 
-    <div class="row product-list" *ngFor="let program of recommendedPrograms" >
+    <div class="row product-list" *ngFor="let program of programs.recommended" >
         <div class="col-sm-12 col-lg-12 col-md-12 product-item">
             <div class="border rounded profile-card">
                 <div class="row" style="height: 100%;margin-top: 1%;padding: 1%;">
@@ -180,37 +157,14 @@
                             <h6 class="post-subtitle recomend">{{program.description}} </h6>
                             <h4 class="post-subtitle recomend">Major careers</h4>
                             <ul class="recomend" >
-                            <li *ngFor="let possibleCareer of program.careers" >{{possibleCareer}}</li>
+                            <!-- <li *ngFor="let possibleCareer of program.careers" >{{possibleCareer}}</li> -->
                             </ul>
-                        <p class="text-center post-meta">Last updated&nbsp;:&nbsp;{{program.lastUpdated}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;Source&nbsp;:&nbsp;{{program.source}}</p>
+                        <!-- <p class="text-center post-meta">Last updated&nbsp;:&nbsp;{{program.lastUpdated}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;Source&nbsp;:&nbsp;{{program.source}}</p> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- <div class="row product-list">
-        <div class="col-sm-12 col-lg-12 col-md-12 product-item">
-            <div class="border rounded profile-card">
-                <div class="row" style="height: 100%;margin-top: 1%;padding: 1%;">
-                    <div class="col col-lg-2 col-md-2 col-sm-12" style="height: 100%;">
-                        <img class="rounded profile-pic" src="assets/img/computer.jpg" style="height: auto;width: 100%;">
-                    </div>
-                    <div class="col col-lg-10 col-md-10 col-sm-12 text-left" style="max-width: 100%;height: 100%;">
-                            <h3  class="post-title recomend"  >Bachelor of Science in Computer Science, Makerere University</h3>
-                            <h6 class="post-subtitle recomend"  >Course description</h6>
-                            <h4 class="post-subtitle recomend"  >Major careers</h4>
-                            <ul class="recomend" >
-                                <li>Data Scientist</li>
-                                <li>Computer Programmer</li>
-                                <li>Software Engineer</li>
-                            </ul>
-                        <p class="text-center post-meta">Last updated&nbsp;September 24, 2019</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>
 
 <ngx-loading style="height: auto;" [show]="loading"></ngx-loading>
