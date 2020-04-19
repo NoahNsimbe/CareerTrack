@@ -5,7 +5,6 @@
         <div class="container" style="filter: brightness(99%);">
 
             <div class="row" >
-
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="input-group-text">Recommendation Type &nbsp; &nbsp;</span></div>
                         <div class="input-group-append">
@@ -15,36 +14,35 @@
                             </select>
                         </div>
                     </div>
-                    
             </div>
             <br>
             <div *ngIf="educLevel.careers" class="row" style="width: 100%;padding-bottom: 40px;">
                 <mat-horizontal-stepper  #stepper style="width: 100%;">
-            
+
                     <mat-step *ngIf="educLevel.uace" >
                         <ng-template matStepLabel ><span>UACE Results</span></ng-template>
                         <app-uace ></app-uace>
                         <div class="mat-buttons">
                             <button mat-raised-button matStepperNext>Next</button>
                         </div>
-                       
-                        
+
+
                     </mat-step>
-            
+
                     <mat-step *ngIf="educLevel.uce">
-                
+
                         <ng-template matStepLabel><span>UCE Results</span></ng-template>
                         <app-uce></app-uce>
                         <div class="mat-buttons">
                             <button *ngIf="educLevel.uace"  mat-raised-button matStepperPrevious>Back</button>
                             <button mat-raised-button matStepperNext>Next</button>
                         </div>
-            
-                
+
+
                     </mat-step>
-            
+
                     <mat-step >
-                      <ng-template matStepLabel><span>Careers</span></ng-template>
+                      <ng-template matStepLabel><span>Career</span></ng-template>
                       <div class="row product-list">
                         <div class="col-sm-12 col-lg-12 col-md-12 product-item">
                             <div class="profile-card">
@@ -54,29 +52,26 @@
                                     </div>
                                 </div>
                                 <div class="row" style="height: 100%;margin-left: 1%;margin-bottom: 2.5%;">
-                                    <div class="col" >
-                                        <div>
-                                            <form [formGroup]="careerForm" class="example-form">
-                                                <div class="input-group">
-                                                    <mat-form-field class="example-full-width">
-                                                        <input type="text"
-                                                               placeholder="Career choice (compulsory)"
-                                                               aria-label="Number"
-                                                               matInput
-                                                               [formControl]="careerChoice"
-                                                               [matAutocomplete]="auto">
-                                                          
-                                                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                                                          <mat-option *ngFor="let option of filteredOption | async" [value]="option">
-                                                            {{option}}
-                                                          </mat-option>
-                                                        </mat-autocomplete>
-                                                      </mat-form-field>
-                                                </div>                 
-                                                  
-                                            </form>
-            
-                                        </div>
+                                    <div class="col">
+                                        <form [formGroup]="careerForm" class="example-form">
+                                            <div class="input-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input type="text"
+                                                           placeholder="Career choice (compulsory)"
+                                                           aria-label="Number"
+                                                           matInput
+                                                           [formControl]="careerChoice"
+                                                           [matAutocomplete]="auto">
+
+                                                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                                      <mat-option *ngFor="let option of filteredOption | async" [value]="option">
+                                                        {{option}}
+                                                      </mat-option>
+                                                    </mat-autocomplete>
+                                                  </mat-form-field>
+                                            </div>
+
+                                        </form>
                                     </div>
                                     <div class="col">
                                         <!-- <div class="row">
@@ -86,13 +81,13 @@
                                                 </form>
                                             </div>
                                         </div> -->
-                                        
-                                        <div class="row">
+
+                                        <!-- <div class="row">
 
                                                 <div *ngIf="loggedIn" class="col" >
-                                                    <mat-checkbox  color="primary">Save details to my profile</mat-checkbox> <!--[(ngModel)]="saveDetails"-->
+                                                    <mat-checkbox  color="primary">Save details to my profile</mat-checkbox> <!--[(ngModel)]="saveDetails"
                                                 </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +99,6 @@
                             <button  mat-raised-button color="primary" (click)="verify()" >Submit</button>
                             <!-- <button  mat-raised-button (click)="stepper.reset()">Submit</button> -->
                         </div>
-                    
                     </div>
                     </mat-step>
                 </mat-horizontal-stepper>

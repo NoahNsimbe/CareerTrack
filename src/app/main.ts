@@ -3,8 +3,8 @@ export interface Careers{
 }
 
 export class UserSubmissions{
-    uceResults: any;
-    uaceResults: any;
+    uce_results?: any;
+    uace_results?: any;
     career: string;
 }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Careers, UserSubmissions } from './main';
@@ -10,9 +10,27 @@ import { ServerService } from './server.service';
 @Injectable({
   providedIn: 'root'
 })
+
+// const httpOptions = {
+//     headers: new HttpHeaders({
+//       'Content-Type': 'application/json',
+//       'Authorization': null,
+//     })
+// }
+
 export class MainService {
 
-  constructor(private httpClient: HttpClient, private serverService: ServerService) { }
+  httpOptions: any;
+
+  constructor(private httpClient: HttpClient, private serverService: ServerService) {
+
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+
+  }
 
   getUaceSubjects(): Observable<UaceSubjects>{
     return this.httpClient.get<UaceSubjects>(this.serverService.getApi("uace_subjects")).pipe(
@@ -28,23 +46,38 @@ export class MainService {
   }
 
   getCareers(): Observable<Careers>{
+
+    // this.response = this.httpClient
+    // .get<HttpResponseBase>(this.serverService.getApi("careers"))
+    // .pipe(retry(3),catchError(this.handleError));
+
     return this.httpClient
               .get<Careers>(this.serverService.getApi("careers"))
               .pipe(retry(3),catchError(this.handleError));
 
   }
 
-  getCombinations(submissions: UserSubmissions): Observable<Combinations>{
-    let data = JSON.stringify(submissions.career + submissions.uceResults);
+  getCombinations(submissions: UserSubmissions, careerOnly: boolean): Observable<any>{
+
+    var data = null
+    if (careerOnly == true){
+      data = JSON.stringify({"career" : submissions.career});
+    }
+    else{
+      data = JSON.stringify({"career" : submissions.career, "uce_results" : submissions.uce_results});
+    }
+
+    data = JSON.stringify({"career" : submissions.career});
+
     return this.httpClient
-                .get<Combinations>(this.serverService.getApi("combination"))
+                .post<Combinations>(this.serverService.getApi("combination"), data, this.httpOptions)
                 .pipe(retry(3),catchError(this.handleError));
   }
 
-  getPrograms(submissions: UserSubmissions): Observable<Programs>{
-    let data = JSON.stringify(submissions.uaceResults + submissions.career);
+  getPrograms(submissions: UserSubmissions, careerOnly: boolean): Observable<Programs>{
+    let data = JSON.stringify(submissions);
     return this.httpClient
-                .get<Programs>(this.serverService.getApi("course"))
+                .post<Programs>(this.serverService.getApi("course"), data)
                 .pipe(retry(3),catchError(this.handleError));
   }
 
