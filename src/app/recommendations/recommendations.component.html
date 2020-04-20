@@ -107,10 +107,10 @@
     </div>
 </div>
 
-<div *ngIf="operationSuccess && educLevel.uce && !(educLevel.uace)" class="container" style="background-color: rgba(0,0,0,0.04);padding-top: 20px;">
+<div *ngIf="operationSuccess && (educLevel.uce || educLevel.combination ) && !(educLevel.uace)" class="container" style="background-color: rgba(0,0,0,0.04);padding-top: 20px;">
     <h2 class="post-title recomend text-center" style="width: 100%;" >Recommended Combinations</h2>
 
-    <div class="row product-list" *ngFor="let combination of combinations.combination" >
+    <div class="row product-list" *ngFor="let combination of combinations.combinations" >
         <div class="col-sm-12 col-lg-12 col-md-12 product-item">
             <div class="border rounded profile-card">
                 <div class="row" style="height: 100%;margin-top: 1%;padding: 1%;">
@@ -134,7 +134,7 @@
     </div>
 </div>
 
-<div *ngIf="operationSuccess && educLevel.uace" class="container" style="background-color: rgba(0,0,0,0.04);padding-top: 20px;">
+<div *ngIf="operationSuccess && (educLevel.uace || educLevel.course )" class="container" style="background-color: rgba(0,0,0,0.04);padding-top: 20px;">
     <h2 class="post-title recomend text-center" style="width: 100%;" >Recommended University Programs</h2>
 
     <div class="row product-list" *ngFor="let program of programs.recommended" >

@@ -11,13 +11,6 @@ import { ServerService } from './server.service';
   providedIn: 'root'
 })
 
-// const httpOptions = {
-//     headers: new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       'Authorization': null,
-//     })
-// }
-
 export class MainService {
 
   httpOptions: any;
@@ -47,10 +40,6 @@ export class MainService {
 
   getCareers(): Observable<Careers>{
 
-    // this.response = this.httpClient
-    // .get<HttpResponseBase>(this.serverService.getApi("careers"))
-    // .pipe(retry(3),catchError(this.handleError));
-
     return this.httpClient
               .get<Careers>(this.serverService.getApi("careers"))
               .pipe(retry(3),catchError(this.handleError));
@@ -67,38 +56,47 @@ export class MainService {
       data = JSON.stringify({"career" : submissions.career, "uce_results" : submissions.uce_results});
     }
 
-    data = JSON.stringify({"career" : submissions.career});
-
     return this.httpClient
                 .post<Combinations>(this.serverService.getApi("combination"), data, this.httpOptions)
                 .pipe(retry(3),catchError(this.handleError));
   }
 
-  getPrograms(submissions: UserSubmissions, careerOnly: boolean): Observable<Programs>{
-    let data = JSON.stringify(submissions);
+  getPrograms(submissions: UserSubmissions, careerOnly: boolean): Observable<any>{
+
+    var data = null
+    if (careerOnly == true){
+      data = JSON.stringify({"career" : submissions.career});
+    }
+    else{
+      data = JSON.stringify({"career" : submissions.career, "uce_results" : submissions.uce_results, "uace_results" : submissions.uace_results});
+    }
+
     return this.httpClient
-                .post<Programs>(this.serverService.getApi("course"), data)
+                .post<Programs>(this.serverService.getApi("course"), data, this.httpOptions)
                 .pipe(retry(3),catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
+
+    var user_response = null
     if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-      // console.log('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
+      user_response = error.error.message
+      console.error('An error occurred:', user_response); 
+    } 
+    
+    else {
+      if (error.status == 500){
+        user_response = error.error
+      }
+      else{
+        user_response = "Something bad happened. Please try again later"
+      }
       console.error(
         `Backend returned code ${error.status}, ` +
         `body was: ${error.error}`);
-      // console.log(
-      //   `Backend returned code ${error.status}, ` +
-      //   `body was: ${error.error}`);
     }
 
-    return throwError(
-      'Something bad happened; please try again later.');
+    return throwError(user_response);
   }
 
 }

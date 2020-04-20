@@ -1,5 +1,5 @@
 export interface Combinations{
-    combination?: { code : string, subjects: string[] }[];
+    combinations: { code : string, subjects: string[] }[];
    // combination: any;
 }
 

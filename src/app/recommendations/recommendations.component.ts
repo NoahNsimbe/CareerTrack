@@ -28,6 +28,7 @@ export class RecommendationsComponent implements OnInit {
   electivesForm: FormGroup;
   submissions: UserSubmissions;
   careerForm: FormGroup;
+  uceRecommnedations: any;
 
   combinations: Combinations;
   programs: Programs;
@@ -59,6 +60,8 @@ export class RecommendationsComponent implements OnInit {
       this.loggedIn = true;
       this.loading = false;
       this.saveDetails = false;
+
+      this.uceRecommnedations = new Array();
 
       this.submissions = new UserSubmissions();
 
@@ -119,10 +122,16 @@ export class RecommendationsComponent implements OnInit {
     this.mainService.getCombinations(results, careerOnly)
     .subscribe((data: Combinations) => {
       this.combinations = data;
-      console.log(this.combinations);
+      console.log(this.combinations.combinations);
+      for(let subject in this.combinations.combinations){
+      //  console.log(subject);
+        this.uceRecommnedations.append("{subject: this.combinations.combinations[subject] }")
+      }
+      console.log(this.uceRecommnedations)
       this.operationSuccess = true;
     },error => {
       console.log("error => " + error);
+      alert(error)
       this.operationSuccess = false;});
   }
 
@@ -134,6 +143,7 @@ export class RecommendationsComponent implements OnInit {
       this.operationSuccess = true;
     },error => {
       console.log("error => " + error);
+      alert(error)
       this.operationSuccess = false;
     });
 
@@ -164,6 +174,47 @@ export class RecommendationsComponent implements OnInit {
     }
 
     return uce_compulsory
+  }
+
+  unpackUace(results: {}): {}{
+
+    let uaceResults: any{} = {}
+
+    for(let x in results) {
+
+        if (x == 'uaceOption1' || x == 'uaceOption2' || x == 'uaceOption2' || x == 'uaceSubsidiary'){
+
+          let subject = results[x];
+
+          if(subject != null){
+
+            var grade_name = x + "Grade"
+
+            if (results[grade_name] != null){
+                var grade = results[grade_name]
+                uaceResults[subject] = grade
+            }
+          }
+        }
+        else if (x == 'applicationType'){
+          uaceResults["admission_type"] = results[x]
+        }
+        else if (x == 'genderType'){
+          uaceResults["gender"] = results[x]
+        }
+        else if(x == 'uaceGpGrade'){
+
+          this.uaceComponent.compulsorySubjects.forEach(element => {
+            uaceResults[element.code] = results[x]
+          });
+        }
+        else{
+
+        }
+    }
+
+    return uaceResults
+
   }
 
   verify(): void{
@@ -202,7 +253,8 @@ export class RecommendationsComponent implements OnInit {
           return
         }
         else{
-          this.submissions.uace_results = this.uaceForm.value;
+        //  this.submissions.uace_results = this.uaceForm.value;
+          this.submissions.uace_results = this.unpackUace(this.uaceForm.value);
           console.log(this.submissions)
           // this.getPrograms(this.submissions, false);
         }
@@ -231,7 +283,7 @@ export class RecommendationsComponent implements OnInit {
   }
 
   inputChanged(e: { target: { value: any; }; }) {
-    var elementValue = e.target.value;
+    let elementValue: any = e.target.value;
 
     if(elementValue !== ""){
 

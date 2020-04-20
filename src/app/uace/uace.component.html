@@ -25,7 +25,57 @@
             <div class="row" style="height: 100%;margin-left: 1%;">
                 <div class="col">
                     <form [formGroup]="uaceResults" >
-                        <div class="input-group">
+
+                      <div class="input-group">
+                          <div class="input-group-prepend"><span class="input-group-text">Option 1</span></div>
+                          <div class="input-group-append">
+                              <select class="custom-select" #uaceOption1 (change)="inputChanged(uaceOption1, $event)" formControlName="uaceOption1">
+                                  <option value="">Select subject</option>
+                                  <option *ngFor="let subject of mainSubjects" [ngValue]="subject.code">{{subject.name}}</option>
+                              </select>
+                          </div>
+                          <div class="input-group-append">
+                              <select class="custom-select" #uaceOption1Grade (change)="inputChanged(uaceOption1Grade, $event)" formControlName="uaceOption1Grade">
+                                  <option value="">Select grade</option>
+                                  <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="input-group">
+                          <div class="input-group-prepend"><span class="input-group-text">Option 2</span></div>
+                          <div class="input-group-append">
+                              <select class="custom-select" #uaceOption2 (change)="inputChanged(uaceOption2, $event)" formControlName="uaceOption2">
+                                  <option value="">Select subject</option>
+                                  <option *ngFor="let subject of mainSubjects" [ngValue]="subject.code">{{subject.name}}</option>
+                              </select>
+                          </div>
+                          <div class="input-group-append">
+                              <select class="custom-select" #uaceOption2Grade (change)="inputChanged(uaceOption2Grade, $event)" formControlName="uaceOption2Grade">
+                                  <option value="">Select grade</option>
+                                  <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="input-group">
+                          <div class="input-group-prepend"><span class="input-group-text">Option 3</span></div>
+                          <div class="input-group-append">
+                              <select class="custom-select" #uaceOption3 (change)=inputChanged(uaceOption3, $event)" formControlName="uaceOption3">
+                                  <option value="">Select subject</option>
+                                  <option *ngFor="let subject of mainSubjects" [ngValue]="subject.code">{{subject.name}}</option>
+                              </select>
+                          </div>
+                          <div class="input-group-append">
+                              <select class="custom-select" #uaceOption3Grade (change)="inputChanged(uaceOption3Grade, $event)" formControlName="uaceOption3Grade">
+                                  <option value="">Select grade</option>
+                                  <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                              </select>
+                          </div>
+                      </div>
+
+
+                        <!-- <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">Option 1&nbsp;</span></div>
                             <div class="input-group-append">
                                 <select  class="custom-select" #uaceOption1 (change)="inputChanged(uaceOption1, $event)" formControlName="uaceOption1">
@@ -69,19 +119,20 @@
                                     <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
                                 </select>
                             </div>
-                        </div>              
+                        </div> -->
                     </form>
                 </div>
-                
-                
+
+
                 <div class="col">
                     <form [formGroup]="uaceResults" >
+
                         <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Subsidiary&nbsp;</span></div>
+                            <div class="input-group-prepend"><span class="input-group-text">Subsidiary Subject&nbsp;</span></div>
                             <div class="input-group-append">
                                 <select class="custom-select" #uaceSubsidiary (change)="inputChanged(uaceSubsidiary, $event)" formControlName="uaceSubsidiary">
                                     <option value="">Select subject</option>
-                                    <option *ngFor="let subject of susidiaries" [ngValue]="subject">{{subject}}</option>
+                                    <option *ngFor="let subject of susidiaries" [ngValue]="subject.code">{{subject.name}}</option>
                                 </select>
                             </div>
                             <div class="input-group-append">
@@ -91,7 +142,34 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">General subject&nbsp;</span></div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceGpSubject>
+                                    <option value="">Select subject</option>
+                                    <option *ngFor="let subject of compulsorySubjects" [ngValue]="subject.code">{{subject.name}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append">
+                                <select class="custom-select" #uaceGpGrade (change)="inputChanged(uaceGpGrade, $event)" formControlName="uaceSubsidiaryGrade">
+                                    <option value="">Select grade</option>
+                                    <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <select class="custom-select" #genderType (change)="inputChanged(genderType, $event)" formControlName="gender">
+                                    <option value="">Select Gender</option>
+                                    <option *ngFor="let type of genderTypes" [ngValue]="type.value">{{type.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">{{compulsorySubject}}&nbsp;</span></div>
                             <div class="input-group-append">
                                 <select class="custom-select" #uaceDpGrade (change)="inputChanged(uaceDpGrade, $event)" formControlName="uaceDpGrade">
@@ -99,16 +177,10 @@
                                     <option *ngFor="let grade of Grades" [ngValue]="grade.value">{{grade.name}}</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
-
-
             </div>
         </div>
     </div>
 </div>
-
-
-
-  
