@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Article, Blog, ArticleComment, ArticleRates } from './blog';
+import { Article, Blog, ArticleComment, ArticleRates } from '../models/blog';
 import { Observable, throwError } from 'rxjs';
 import { ServerService } from './server.service';
 import { retry, catchError, tap } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { retry, catchError, tap } from 'rxjs/operators';
 })
 export class BlogService {
   httpOptions: { headers: HttpHeaders; };
-  
+
 
   constructor(private httpClient: HttpClient, private serverService: ServerService) {
     this.httpOptions = {
@@ -46,7 +46,7 @@ export class BlogService {
                           );
   }
 
-  
+
   likeArticle(articleId: string): Observable<ArticleRates>{
     return this.httpClient.post<ArticleRates>(this.serverService.getApi("like_article"), articleId)
                           .pipe(

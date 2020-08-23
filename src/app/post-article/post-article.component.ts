@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { Title } from '@angular/platform-browser';
-import { Article } from '../blog';
-import { BlogService } from '../blog.service';
+import { Article } from '../models/blog';
+import { BlogService } from '../services/blog.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -27,20 +27,20 @@ export class PostArticleComponent implements OnInit {
 
    }
 
-  
+
   postArticle(): void{
     if(this.postArticleFormGroup.valid){
       this.article = this.postArticleFormGroup.value as Article;
       console.log("Article to be posted => " +  this.article)
       this.blogService.postArticle(this.article)
-                      .subscribe((data: Article) => 
+                      .subscribe((data: Article) =>
                         {console.log("Article successfully posted => " + data)},
                         error => {console.log(error)}
                         )
     }
 
   }
-  
+
 
   ngOnInit() {
     this.titleService.setTitle("Post Article | Career Track")

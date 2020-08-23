@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { UceSubjects, uceSubjects } from '../uce';
-import { MainService } from '../main.service';
+import { UceSubjects, uceSubjects } from '../models/uce';
+import { MainService } from '../services/main.service';
 
 
 @Component({

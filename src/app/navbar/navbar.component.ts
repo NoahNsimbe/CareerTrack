@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { UserLogin, User } from '../user';
-import { UserService } from '../user.service';
-import { AuthenticationService } from '../auth.service';
+import { UserLogin, User } from '../models/user';
+import { UserService } from '../services/user.service';
+import { AuthenticationService } from '../services/auth.service';
 
 export interface loading{value: false};
 
@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
   public signUp: User;
   public user: User;
 
-  constructor(public dialog: MatDialog, public authService: AuthenticationService, public userService: UserService) {  
+  constructor(public dialog: MatDialog, public authService: AuthenticationService, public userService: UserService) {
     this.loading = false;
     this.logIn = null;
     this.signUp = null;
@@ -35,13 +35,13 @@ export class NavbarComponent implements OnInit {
         console.log("user closed dialog");
       }
       else if (result === true){
-        this.openLogInDialog();  
+        this.openLogInDialog();
       }
       else{
 
         try {
           this.signUp = result.value as User;
-          console.log(JSON.stringify(this.signUp)); 
+          console.log(JSON.stringify(this.signUp));
           this.userService.addUser(this.signUp)
                           .subscribe((data: User) => {
                                         console.log(data),
@@ -49,7 +49,7 @@ export class NavbarComponent implements OnInit {
                                         signUpSuccess = true;
                                       },
                                       error => {console.log(error)}
-                                      );  
+                                      );
           if(signUpSuccess){
             this.authService.signIn(this.logIn);
           }
@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
         }
 
       }
-    
+
     });
   }
 
@@ -89,9 +89,9 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  
+
   ngOnInit() {
-    
+
   }
 
 
@@ -154,7 +154,7 @@ export class LoginComponent implements OnInit {
   });
   public loginLoading: boolean;
 
-  constructor(public dialogRef: MatDialogRef<LoginComponent>, 
+  constructor(public dialogRef: MatDialogRef<LoginComponent>,
     private formBuilder: FormBuilder) {
       this.loginLoading = false;
      }

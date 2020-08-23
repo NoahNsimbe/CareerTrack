@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Article, Blog } from '../blog';
+import { Article, Blog } from '../models/blog';
 import { catchError } from 'rxjs/operators';
-import { BlogService } from '../blog.service';
+import { BlogService } from '../services/blog.service';
 
 @Component({
   selector: 'app-blog',
@@ -13,11 +13,11 @@ export class BlogComponent implements OnInit {
 
   articles: Article[];
   error: string;
-  
+
 
   constructor(
-    private titleService: Title, 
-    private blogService: BlogService ) 
+    private titleService: Title,
+    private blogService: BlogService )
     { }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class BlogComponent implements OnInit {
 
   }
 
-  
+
 
 
 

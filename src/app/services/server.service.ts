@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, retry } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
-import { UserLogin } from './user';
-import { Urls } from './main'
+import { UserLogin } from '../models/user';
+import { Urls } from '../models/main'
 
 const httpOptions = {
     headers: new HttpHeaders({

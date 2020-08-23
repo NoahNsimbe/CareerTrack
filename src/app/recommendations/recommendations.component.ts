@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Careers, UserSubmissions } from '../main';
+import { Careers, UserSubmissions } from '../models/main';
 import { UceComponent } from '../uce/uce.component';
 import { UaceComponent } from '../uace/uace.component';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { Subject, Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { Combinations } from '../uce';
-import { Programs } from '../uace';
-import { MainService } from '../main.service';
+import { Combinations } from '../models/uce';
+import { Programs } from '../models/uace';
+import { MainService } from '../services/main.service';
 
 @Component({
   selector: 'app-recommendations',
@@ -49,7 +49,7 @@ export class RecommendationsComponent implements OnInit {
   comment: FormControl;
   careers: string[];
   filteredOption: Observable<string[]>;
-  educLevel: { "uce": boolean; "uace": boolean; 'careers': boolean; "course": boolean; "combination": boolean; };
+  educLevel: { 'uce': boolean; 'uace': boolean; 'careers': boolean; 'course': boolean; 'combination': boolean; };
 
 
   constructor(
@@ -61,7 +61,7 @@ export class RecommendationsComponent implements OnInit {
       this.loading = false;
       this.saveDetails = false;
 
-      this.uceRecommnedations = new Array();
+      this.uceRecommnedations = [];
 
       this.submissions = new UserSubmissions();
 
@@ -72,18 +72,18 @@ export class RecommendationsComponent implements OnInit {
         {  name: 'Course, provided results', value: 'UACE'},
         {  name: 'Combination, without results', value: 'COMBINATION'},
         {  name: 'Course, without results', value: 'COURSE'}
-      ]
+      ];
 
-      this.educLevel = { "course": false, "combination": false, "uce": false, "uace": false, 'careers':false  };
+      this.educLevel = { course: false, combination: false, uce: false, uace: false, careers: false  };
       this.operationSuccess = false;
 
-      this.careerChoice = new FormControl("", RxwebValidators.required());
+      this.careerChoice = new FormControl('', RxwebValidators.required());
 
       this.careerForm = this.formBuilder.group({
         career: this.careerChoice,
       });
 
-      this.level = ""
+      this.level = '';
      }
 
   ngOnInit() {
@@ -102,70 +102,74 @@ export class RecommendationsComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase().trim();
 
-    if(filterValue.length > 0){
+    if (filterValue.length > 0) {
       return this.careers.filter(option => option.toLowerCase().includes(filterValue));
    //   return this.careers.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
     }
-    return
+    return;
 
   }
 
-  loadCareers(): void{
+  loadCareers(): void {
     this.mainService
         .getCareers()
-        .subscribe((data: Careers) =>{
-          this.careers = data.careers;
-        },error => console.log("error => " + error));
+        .subscribe((data: Careers) => {
+
+          for (const dataKey in data) {
+            const lastindex = this.careers.length;
+            this.careers[lastindex] = data[dataKey].name;
+          }
+        }, error => console.log('error => ' + error));
   }
 
-  getCombinations(results: UserSubmissions, careerOnly: boolean): void{
+  getCombinations(results: UserSubmissions, careerOnly: boolean): void {
     this.mainService.getCombinations(results, careerOnly)
     .subscribe((data: Combinations) => {
       this.combinations = data;
       console.log(this.combinations.combinations);
-      for(let subject in this.combinations.combinations){
+      for (const subject in this.combinations.combinations) {
       //  console.log(subject);
-        this.uceRecommnedations.append("{subject: this.combinations.combinations[subject] }")
+        this.uceRecommnedations.append('{subject: this.combinations.combinations[subject] }');
       }
-      console.log(this.uceRecommnedations)
+      console.log(this.uceRecommnedations);
       this.operationSuccess = true;
-    },error => {
-      console.log("error => " + error);
-      alert(error)
-      this.operationSuccess = false;});
+    }, error => {
+      console.log('error => ' + error);
+      alert(error);
+      this.operationSuccess = false; });
   }
 
-  getPrograms(results: UserSubmissions, careerOnly: boolean): void{
+  getPrograms(results: UserSubmissions, careerOnly: boolean): void {
     this.mainService.getPrograms(results, careerOnly)
     .subscribe((data: Programs) => {
       this.programs = data;
       console.log(this.programs);
       this.operationSuccess = true;
-    },error => {
-      console.log("error => " + error);
-      alert(error)
+    }, error => {
+      console.log('error => ' + error);
+      alert(error);
       this.operationSuccess = false;
     });
 
   }
 
-  addElectives(results: {}, electives: {}): {}{
+  addElectives(results: {}, electives: {}): {} {
 
-    var uce_compulsory = results
-    var uce_electives = electives
+    const uceCompulsory = results;
+    const uceElectives = electives;
 
-    for(let subject in uce_electives) {
+    for (const subject in uceElectives) {
 
-        if (subject == 'uceElective1' || subject == 'uceElective2' || subject == 'uceElective3'){
+        if (subject === 'uceElective1' || subject === 'uceElective2' || subject === 'uceElective3') {
 
-          let elective = uce_electives[subject];
+          const elective = uceElectives[subject];
 
-          if(elective != null){
-            var grade_name = subject + "Grade"
+          if (elective != null) {
+            const grade_name = subject + 'Grade';
 
-            if (uce_electives[grade_name] != null){
-                var grade = uce_electives[grade_name]
-                uce_compulsory[elective] = grade
+            if (uceElectives[grade_name] != null) {
+                const grade = uceElectives[grade_name];
+                uceCompulsory[elective] = grade;
             }
 
           }
@@ -173,109 +177,97 @@ export class RecommendationsComponent implements OnInit {
         }
     }
 
-    return uce_compulsory
+    return uceCompulsory;
   }
 
-  unpackUace(results: {}): {}{
+  unpackUace(results: {}): {} {
 
-    let uaceResults: any{} = {}
+    const uaceResults: any = {};
 
-    for(let x in results) {
+    for (const x in results) {
 
-        if (x == 'uaceOption1' || x == 'uaceOption2' || x == 'uaceOption2' || x == 'uaceSubsidiary'){
+        if (x == 'uaceOption1' || x == 'uaceOption2' || x == 'uaceOption2' || x == 'uaceSubsidiary') {
 
-          let subject = results[x];
+          const subject = results[x];
 
-          if(subject != null){
+          if (subject != null) {
 
-            var grade_name = x + "Grade"
+            const grade_name = x + 'Grade';
 
-            if (results[grade_name] != null){
-                var grade = results[grade_name]
-                uaceResults[subject] = grade
+            if (results[grade_name] != null) {
+                const grade = results[grade_name];
+                uaceResults[subject] = grade;
             }
           }
-        }
-        else if (x == 'applicationType'){
-          uaceResults["admission_type"] = results[x]
-        }
-        else if (x == 'genderType'){
-          uaceResults["gender"] = results[x]
-        }
-        else if(x == 'uaceGpGrade'){
+        } else if (x == 'applicationType') {
+          uaceResults.admission_type = results[x];
+        } else if (x == 'genderType') {
+          uaceResults.gender = results[x];
+        } else if (x == 'uaceGpGrade') {
 
           this.uaceComponent.compulsorySubjects.forEach(element => {
-            uaceResults[element.code] = results[x]
+            uaceResults[element.code] = results[x];
           });
-        }
-        else{
+        } else {
 
         }
     }
 
-    return uaceResults
+    return uaceResults;
 
   }
 
-  verify(): void{
+  verify(): void {
 
     //   this.loading = true;
 
     this.operationSuccess = false;
 
-    if(!this.careerForm.valid){
-      alert("Please fill in a careeer");
-      return
+    if (!this.careerForm.valid) {
+      alert('Please fill in a careeer');
+      return;
     }
-    this.submissions.career = this.careerForm.get("career").value;
+    this.submissions.career = this.careerForm.get('career').value;
 
-    if(this.educLevel.uace || this.educLevel.uce){
+    if (this.educLevel.uace || this.educLevel.uce) {
 
       this.uceForm = this.uceComponent.uceResults;
       this.electivesForm = this.uceComponent.electivesResults;
 
-      if(!this.uceForm.valid){
-        alert("Please fill in all your UCE subjects and results");
-        return
-      }
-      else if(!this.electivesForm.valid){
-        alert("Please fill in atleast the first UCE elective subject and its results results");
-        return
-      }
-      else{
+      if (!this.uceForm.valid) {
+        alert('Please fill in all your UCE subjects and results');
+        return;
+      } else if (!this.electivesForm.valid) {
+        alert('Please fill in atleast the first UCE elective subject and its results results');
+        return;
+      } else {
         this.submissions.uce_results = this.addElectives(this.uceForm.value, this.electivesForm.value);
       }
 
-      if(this.educLevel.uace){
+      if (this.educLevel.uace) {
         this.uaceForm = this.uaceComponent.uaceResults;
-        if(!this.uaceForm.valid){
-          alert("Please fill in all your UACE subjects, results and specify the application type");
-          return
-        }
-        else{
+        if (!this.uaceForm.valid) {
+          alert('Please fill in all your UACE subjects, results and specify the application type');
+          return;
+        } else {
         //  this.submissions.uace_results = this.uaceForm.value;
           this.submissions.uace_results = this.unpackUace(this.uaceForm.value);
-          console.log(this.submissions)
+          console.log(this.submissions);
           // this.getPrograms(this.submissions, false);
         }
-      }
-      else{
-        console.log(this.submissions)
+      } else {
+        console.log(this.submissions);
       //  this.getCombinations(this.submissions, false);
       }
-    }
-
-    else if(this.educLevel.combination){
+    } else if (this.educLevel.combination) {
       // console.log(this.submissions)
       this.getCombinations(this.submissions, true);
-    }
-    else if(this.educLevel.course){
+    } else if (this.educLevel.course) {
       // console.log(this.submissions)
       this.getPrograms(this.submissions, true);
-    }
-    else{
-      console.log("Not recommdation selected")
-      return
+    } else {
+      console.log('Not recommdation selected');
+      return;
     }
 
  //   this.loading = false;
@@ -283,44 +275,39 @@ export class RecommendationsComponent implements OnInit {
   }
 
   inputChanged(e: { target: { value: any; }; }) {
-    let elementValue: any = e.target.value;
+    const elementValue: any = e.target.value;
 
-    if(elementValue !== ""){
+    if (elementValue !== '') {
 
       this.recommendation.forEach(recom => {
-        if(recom.name == elementValue){
+        if (recom.name == elementValue) {
           this.level = recom.value ;
         }
-      })
+      });
 
-      this.educLevel.careers = true
+      this.educLevel.careers = true;
 
-      if(this.level.trim().valueOf() == "UCE"){
-        this.educLevel.uce = true
-        this.educLevel.uace = false
-      }
-      else if(this.level.trim().valueOf() == "UACE"){
-        this.educLevel.uce = true
-        this.educLevel.uace = true
-      }
-      else if(this.level.trim().valueOf() == "COMBINATION"){
-        this.educLevel.combination = true
-      }
-      else if(this.level.trim().valueOf() == "COURSE"){
-        this.educLevel.course = true
-      }
-      else{
-        this.educLevel.careers = false
+      if (this.level.trim().valueOf() == 'UCE') {
+        this.educLevel.uce = true;
+        this.educLevel.uace = false;
+      } else if (this.level.trim().valueOf() == 'UACE') {
+        this.educLevel.uce = true;
+        this.educLevel.uace = true;
+      } else if (this.level.trim().valueOf() == 'COMBINATION') {
+        this.educLevel.combination = true;
+      } else if (this.level.trim().valueOf() == 'COURSE') {
+        this.educLevel.course = true;
+      } else {
+        this.educLevel.careers = false;
         // error
       }
 
-    }
-    else{
-      this.educLevel.uce = false
-      this.educLevel.uace = false
-      this.educLevel.careers = false
-      this.educLevel.course = false
-      this.educLevel.combination = false
+    } else {
+      this.educLevel.uce = false;
+      this.educLevel.uace = false;
+      this.educLevel.careers = false;
+      this.educLevel.course = false;
+      this.educLevel.combination = false;
 
     }
   }

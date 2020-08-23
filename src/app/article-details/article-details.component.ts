@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { Article, ArticleComment, ArticleRates } from '../blog';
-import { ServerService } from '../server.service';
-import { BlogService } from '../blog.service';
+import { Article, ArticleComment, ArticleRates } from '../models/blog';
+import { ServerService } from '../services/server.service';
+import { BlogService } from '../services/blog.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../auth.service';
-import { UserService } from '../user.service';
-import { User } from '../user';
+import { AuthenticationService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-article-details',
@@ -34,7 +34,7 @@ export class ArticleDetailsComponent implements OnInit {
     this.getArticle();
   }
 
-  postComment(articleId: string): void{    
+  postComment(articleId: string): void{
 
     if(this.articleCommentForm.valid){
 
@@ -51,7 +51,7 @@ export class ArticleDetailsComponent implements OnInit {
       }
 
       this.blogService.commentArticle(this.comment)
-                      .subscribe((data: ArticleComment[]) => 
+                      .subscribe((data: ArticleComment[]) =>
                       {console.log(data)},
                       error => {console.log(error)});
     }
@@ -60,14 +60,14 @@ export class ArticleDetailsComponent implements OnInit {
 
   likeArticle(articleId: string): void{
     this.blogService.likeArticle(articleId)
-                    .subscribe((data: ArticleRates) => 
+                    .subscribe((data: ArticleRates) =>
                     {console.log(data)},
                     error => {console.log(error)});
   }
 
   dislikeArticle(articleId: string): void{
     this.blogService.dislikeArticle(articleId)
-                    .subscribe((data: ArticleRates) => 
+                    .subscribe((data: ArticleRates) =>
                     {console.log(data)},
                     error => {console.log(error)});
   }

@@ -4,12 +4,12 @@ import { AuthService} from "angularx-social-login"
 import { ServerService } from './server.service';
 import { throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UserLogin } from './user';
+import { UserLogin } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService { 
+export class AuthenticationService {
 
   public signedIn: boolean;
   public socialSignedIn: boolean;
@@ -24,8 +24,8 @@ export class AuthenticationService {
   }
 
   public socialSignIn(socialProvider: string): void{
-    
-    
+
+
     if(socialProvider === "facebook"){
       this.socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
     }
@@ -51,7 +51,7 @@ export class AuthenticationService {
       this.signedIn = false;
       this.serverService.logOut();
       this.socialUser = null;
-      
+
     });
   }
 
@@ -68,7 +68,7 @@ export class AuthenticationService {
   }
 
   public signOut(): void{
-     
+
   }
   public logError(error: HttpErrorResponse){
 
