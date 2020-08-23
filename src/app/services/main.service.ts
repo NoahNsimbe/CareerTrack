@@ -26,7 +26,7 @@ export class MainService {
   httpOptions: any;
 
   private static handleError(error: HttpErrorResponse) {
-
+    console.log(error);
     let userResponse: any;
     if (error.error instanceof ErrorEvent) {
       userResponse = error.error.message;
@@ -68,15 +68,15 @@ export class MainService {
 
   getCombinations(submissions: UserSubmissions, careerOnly: boolean): Observable<any> {
 
-    let data: string;
+    let data: any;
     if (careerOnly === true) {
-      data = JSON.stringify({career : submissions.career});
+      data = {career : submissions.career};
     } else {
-      data = JSON.stringify({career : submissions.career, uce_results : submissions.uce_results});
+      data = {career : submissions.career, uce_results : submissions.uce_results};
     }
 
     return this.httpClient
-                .post<Combinations>(`${environment.rootApi}${environment.getCombination}`, data, this.httpOptions)
+                .post<Combinations>(`${environment.rootApi}${environment.getCombination}`, data)
                 .pipe(retry(3), catchError(MainService.handleError));
   }
 

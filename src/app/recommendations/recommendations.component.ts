@@ -123,8 +123,10 @@ export class RecommendationsComponent implements OnInit {
   }
 
   getCombinations(results: UserSubmissions, careerOnly: boolean): void {
-    this.mainService.getCombinations(results, careerOnly)
-    .subscribe((data: Combinations) => {
+
+    this.mainService
+      .getCombinations(results, careerOnly)
+      .subscribe((data: any) => {
       this.combinations = data;
       console.log(this.combinations.combinations);
       for (const subject in this.combinations.combinations) {
@@ -135,8 +137,8 @@ export class RecommendationsComponent implements OnInit {
       this.operationSuccess = true;
     }, error => {
       console.log('error => ' + error);
-      alert(error);
-      this.operationSuccess = false; });
+      this.operationSuccess = false;
+      });
   }
 
   getPrograms(results: UserSubmissions, careerOnly: boolean): void {

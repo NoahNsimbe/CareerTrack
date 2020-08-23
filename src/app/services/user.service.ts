@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { User, UserLogin } from './user';
+import { User, UserLogin } from '../models/user';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
 import { ServerService } from './server.service';
@@ -12,7 +12,7 @@ export class UserService {
   httpOptions: { headers: HttpHeaders; };
   public user: User;
 
-  constructor(public httpClient: HttpClient, public serverService: ServerService) { 
+  constructor(public httpClient: HttpClient, public serverService: ServerService) {
 
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -24,7 +24,7 @@ export class UserService {
 
   loadUser(user: UserLogin): void{
     this.httpOptions.headers.set('Authorization', this.serverService.serverToken);
-    
+
     this.httpClient.post<User>(this.serverService.getApi("post_article"), JSON.stringify(user), this.httpOptions)
                             .pipe(
                               retry(3),
@@ -39,7 +39,7 @@ export class UserService {
 
       this.httpOptions.headers.set('Authorization', this.serverService.serverToken);
       this.httpOptions.headers.set('Content-Type', 'application/json');
-  
+
       return this.httpClient.post<User>(this.serverService.getApi("post_article"), JSON.stringify(user), this.httpOptions)
                             .pipe(
                               retry(3),
@@ -56,7 +56,7 @@ export class UserService {
                             retry(3),
                             catchError(this.handleError)
                           );
-    
+
   }
 
   updateUser(user: User): Observable<User>{
@@ -69,7 +69,7 @@ export class UserService {
                             retry(3),
                             catchError(this.handleError)
                           );
-    
+
   }
 
   private handleError(error: HttpErrorResponse) {
