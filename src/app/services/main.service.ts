@@ -3,8 +3,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Careers, UserSubmissions } from '../models/main';
-import { UaceSubjects, Programs } from '../models/uace';
-import { UceSubjects, Combinations } from '../models/uce';
+import {UaceSubjects, Programs, UaceSubject, Program} from '../models/uace';
+import {Combination, UceSubject} from '../models/uce';
 import {environment} from '../../environments/environment';
 
 @Injectable({
@@ -45,14 +45,14 @@ export class MainService {
     return throwError(userResponse);
   }
 
-  getUaceSubjects(): Observable<UaceSubjects> {
-    return this.httpClient.get<UaceSubjects>(`${environment.rootApi}${environment.uaceSubjects}`).pipe(
+  getUaceSubjects(): Observable<UaceSubject[]> {
+    return this.httpClient.get<UaceSubject[]>(`${environment.rootApi}${environment.uaceSubjects}`).pipe(
       catchError(MainService.handleError)
     );
   }
 
-  getUceSubjects(): Observable<UceSubjects> {
-    return this.httpClient.get<UceSubjects>(`${environment.rootApi}${environment.uceSubjects}`).pipe(
+  getUceSubjects(): Observable<UceSubject[]> {
+    return this.httpClient.get<UceSubject[]>(`${environment.rootApi}${environment.uceSubjects}`).pipe(
       retry(3),
       catchError(MainService.handleError)
     );
@@ -66,7 +66,7 @@ export class MainService {
 
   }
 
-  getCombinations(submissions: UserSubmissions, careerOnly: boolean): Observable<any> {
+  getCombinations(submissions: UserSubmissions, careerOnly: boolean): Observable<Combination[]> {
 
     let data: any;
     if (careerOnly === true) {
@@ -76,21 +76,21 @@ export class MainService {
     }
 
     return this.httpClient
-                .post<Combinations>(`${environment.rootApi}${environment.getCombination}`, data)
+                .post<Combination[]>(`${environment.rootApi}${environment.getCombination}`, data)
                 .pipe(retry(3), catchError(MainService.handleError));
   }
 
-  getPrograms(submissions: UserSubmissions, careerOnly: boolean): Observable<any> {
+  getPrograms(submissions: UserSubmissions, careerOnly: boolean): Observable<Program[]> {
 
-    let data: string;
+    let data: any;
     if (careerOnly === true) {
-      data = JSON.stringify({career : submissions.career});
+      data = {career : submissions.career};
     } else {
-      data = JSON.stringify({career : submissions.career, uce_results : submissions.uce_results, uace_results : submissions.uace_results});
+      data = {career : submissions.career, uce_results : submissions.uce_results, uace_results : submissions.uace_results};
     }
 
     return this.httpClient
-                .post<Programs>(`${environment.rootApi}${environment.getCourse}`, data, this.httpOptions)
+                .post<Program[]>(`${environment.rootApi}${environment.getCourse}`, data)
                 .pipe(retry(3), catchError(MainService.handleError));
   }
 

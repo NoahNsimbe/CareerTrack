@@ -132,7 +132,7 @@
                             <div class="input-group-append">
                                 <select class="custom-select" #uaceSubsidiary (change)="inputChanged(uaceSubsidiary, $event)" formControlName="uaceSubsidiary">
                                     <option value="">Select subject</option>
-                                    <option *ngFor="let subject of susidiaries" [ngValue]="subject.code">{{subject.name}}</option>
+                                    <option *ngFor="let subject of subsidiaries" [ngValue]="subject.code">{{subject.name}}</option>
                                 </select>
                             </div>
                             <div class="input-group-append">

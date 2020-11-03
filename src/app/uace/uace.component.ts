@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { UaceSubjects, uaceSubjects } from '../models/uace';
+import { UaceSubjects, UaceSubject } from '../models/uace';
 import { MainService } from '../services/main.service';
 
 
@@ -20,26 +20,26 @@ export class UaceComponent implements OnInit {
   // susidiaries: string[];
   applicationTypes: any;
   genderTypes: any;
-  uaceSubjects: Array<uaceSubjects>;
-  subsidiaries: Array<uaceSubjects>;
-  mainSubjects: Array<uaceSubjects>;
-  compulsorySubjects:  Array<uaceSubjects>;
+  uaceSubjects: Array<UaceSubject>;
+  subsidiaries: Array<UaceSubject>;
+  mainSubjects: Array<UaceSubject>;
+  compulsorySubjects: Array<UaceSubject>;
 
   uaceResults = this.formBuilder.group({
     uaceOption1: ['', [RxwebValidators.compose({
-        validators:[
+        validators: [
           RxwebValidators.required(),
           RxwebValidators.unique()
         ]
       })] ],
     uaceOption2: ['', [RxwebValidators.compose({
-        validators:[
+        validators: [
           RxwebValidators.required(),
           RxwebValidators.unique()
         ]
       }) ]],
     uaceOption3: ['', RxwebValidators.compose({
-        validators:[
+        validators: [
           RxwebValidators.required(),
           RxwebValidators.unique()
         ]
@@ -57,38 +57,38 @@ export class UaceComponent implements OnInit {
   constructor( private formBuilder: FormBuilder, private mainService: MainService) {
 
     this.applicationTypes = [
-      {name:'Public Admission', value: 'Public'},
-      {name:'Private Admission', value: 'Private'}
+      {name: 'Public Admission', value: 'Public'},
+      {name: 'Private Admission', value: 'Private'}
     ];
     this.genderTypes = [
-      {name:'Male', value: 'Male'},
-      {name:'Female', value: 'Female'}
+      {name: 'Male', value: 'Male'},
+      {name: 'Female', value: 'Female'}
     ];
 
     this.Grades = [
-      {  name: 'A', value: '6'},
-      {  name: 'B', value: '5'},
-      {  name: 'C', value: '4'},
-      {  name: 'D', value: '3'},
-      {  name: 'E', value: '2'},
-      {  name: 'F', value: '1'},
-      {  name: 'O', value: '0'}];
+      {  name: 'A', value: 6},
+      {  name: 'B', value: 5},
+      {  name: 'C', value: 4},
+      {  name: 'D', value: 3},
+      {  name: 'E', value: 2},
+      {  name: 'F', value: 1},
+      {  name: 'O', value: 0}];
     this.subsidiaries = [];
     this.mainSubjects = [];
     this.compulsorySubjects = [];
   }
 
   inputChanged(element: HTMLElement, e: { target: { value: any; }; }) {
-    var elementName = element.getAttribute('formControlName');
-    var elementValue = e.target.value;
+    const elementName = element.getAttribute('formControlName');
+    let elementValue = e.target.value;
 
-    if(elementValue !== ""){
+    if (elementValue !== '') {
 
       elementValue = elementValue.split(':')[1].trim();
 
       this.uaceResults.get(elementName).setValue(elementValue, {
         onlySelf: true
-      })
+      });
     }
   }
 
@@ -98,25 +98,21 @@ export class UaceComponent implements OnInit {
 
   }
 
-  loadSubjects(): void{
+  loadSubjects(): void {
     this.mainService.getUaceSubjects()
-        .subscribe((data: UaceSubjects) => {
-          this.uaceSubjects = data.uace_subjects;
-          console.log(this.uaceSubjects);
-
+        .subscribe((data: UaceSubject[]) => {
+          this.uaceSubjects = data;
           this.uaceSubjects.forEach(subject => {
 
-            let category: string = String(subject.category).toString().toUpperCase()
-            let general: string = String(subject.general_subject).toString().toUpperCase()
+            const category: string = String(subject.category).toString().toUpperCase();
+            const general: boolean = subject.general_subject;
 
-            if(category == "SCIENCE" || category == "ART"){
+            if (category === 'SCIENCE' || category === 'ART') {
               this.mainSubjects.push(subject);
-            }
-            else{
-              if(general == "TRUE"){
+            } else {
+              if (general) {
                 this.compulsorySubjects.push(subject);
-              }
-              else{
+              } else {
                 this.subsidiaries.push(subject);
               }
             }

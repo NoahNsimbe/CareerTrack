@@ -1,14 +1,10 @@
-export interface Combinations{
-    combinations: { code : string, subjects: string[] }[];
-   // combination: any;
+export interface Combination {
+  abbreviation: string;
+  subjects: string[];
 }
 
-export interface UceSubjects {
-    uce_subjects: uceSubjects[];
-}
-
-export interface uceSubjects{
-    code: string;
-    name: string;
-    category: string;
+export interface UceSubject {
+  code: string;
+  name: string;
+  category: string;
 }
