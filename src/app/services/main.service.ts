@@ -46,13 +46,13 @@ export class MainService {
   }
 
   getUaceSubjects(): Observable<UaceSubject[]> {
-    return this.httpClient.get<UaceSubject[]>(`${environment.rootApi}${environment.uaceSubjects}`).pipe(
+    return this.httpClient.get<UaceSubject[]>(`${environment.apiRoot}${environment.uaceSubjects}`).pipe(
       catchError(MainService.handleError)
     );
   }
 
   getUceSubjects(): Observable<UceSubject[]> {
-    return this.httpClient.get<UceSubject[]>(`${environment.rootApi}${environment.uceSubjects}`).pipe(
+    return this.httpClient.get<UceSubject[]>(`${environment.apiRoot}${environment.uceSubjects}`).pipe(
       retry(3),
       catchError(MainService.handleError)
     );
@@ -61,7 +61,7 @@ export class MainService {
   getCareers(): Observable<Careers> {
 
     return this.httpClient
-              .get<Careers>(`${environment.rootApi}${environment.careers}`)
+              .get<Careers>(`${environment.apiRoot}${environment.careers}`)
               .pipe(retry(3), catchError(MainService.handleError));
 
   }
@@ -76,7 +76,7 @@ export class MainService {
     }
 
     return this.httpClient
-                .post<Combination[]>(`${environment.rootApi}${environment.getCombination}`, data)
+                .post<Combination[]>(`${environment.apiRoot}${environment.combination}`, data)
                 .pipe(retry(3), catchError(MainService.handleError));
   }
 
@@ -90,7 +90,7 @@ export class MainService {
     }
 
     return this.httpClient
-                .post<Program[]>(`${environment.rootApi}${environment.getCourse}`, data)
+                .post<Program[]>(`${environment.apiRoot}${environment.course}`, data)
                 .pipe(retry(3), catchError(MainService.handleError));
   }
 
