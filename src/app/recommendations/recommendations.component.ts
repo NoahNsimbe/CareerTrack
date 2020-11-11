@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import {Careers, UserSubmissions} from '../models/main';
+import {Career, UserSubmissions} from '../models/main';
 import {UceComponent} from '../uce/uce.component';
 import {UaceComponent} from '../uace/uace.component';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
@@ -33,7 +33,6 @@ export class RecommendationsComponent implements OnInit {
   combinations: Combination[];
   programs: Program[];
 
-  careersList: Careers[];
   recommendation: any;
 
 
@@ -113,12 +112,16 @@ export class RecommendationsComponent implements OnInit {
   loadCareers(): void {
     this.mainService
         .getCareers()
-        .subscribe((data: Careers) => {
+        .subscribe((data: Career[]) => {
 
-          for (const dataKey in data) {
-            const lastindex = this.careers.length;
-            this.careers[lastindex] = data[dataKey].name;
-          }
+          data.forEach(value => {
+            this.careers.push(value.name);
+          });
+
+          // for (const dataKey in data) {
+          //   const lastindex = this.careers.length;
+          //   this.careers[lastindex] = data[dataKey].name;
+          // }
         }, error => console.log('error => ' + error));
   }
 

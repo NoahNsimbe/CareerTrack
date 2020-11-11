@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { Careers, UserSubmissions } from '../models/main';
+import { Career, UserSubmissions } from '../models/main';
 import {UaceSubjects, Programs, UaceSubject, Program} from '../models/uace';
 import {Combination, UceSubject} from '../models/uce';
 import {environment} from '../../environments/environment';
@@ -58,10 +58,10 @@ export class MainService {
     );
   }
 
-  getCareers(): Observable<Careers> {
+  getCareers(): Observable<Career[]> {
 
     return this.httpClient
-              .get<Careers>(`${environment.apiRoot}${environment.careers}`)
+              .get<Career[]>(`${environment.apiRoot}${environment.careers}`)
               .pipe(retry(3), catchError(MainService.handleError));
 
   }

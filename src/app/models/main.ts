@@ -1,5 +1,6 @@
-export interface Careers {
-    careers: any;
+export interface Career {
+    name: string;
+    description: string;
 }
 
 export class UserSubmissions {
